@@ -12,4 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-org.ballerinalang.observe.mockextension.BMockTracerProvider
+io.ballerina.stdlib.observe.mockextension.BMockTracerProvider

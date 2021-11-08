@@ -99,9 +99,9 @@ task commitTomlFiles {
         project.exec {
             ignoreExitValue true
             if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                commandLine 'cmd', '/c', "git commit Ballerina.toml Dependencies.toml CompilerPlugin.toml -m \"[Automated] Update the native jar versions\""
+                commandLine 'cmd', '/c', "git commit Ballerina.toml Dependencies.toml -m \"[Automated] Update the native jar versions\""
             } else {
-                commandLine 'sh', '-c', "git commit Ballerina.toml Dependencies.toml CompilerPlugin.toml -m '[Automated] Update the native jar versions'"
+                commandLine 'sh', '-c', "git commit Ballerina.toml Dependencies.toml -m '[Automated] Update the native jar versions'"
             }
         }
     }
@@ -128,12 +128,9 @@ publishing {
 
 updateTomlFiles.dependsOn copyStdlibs
 
-build.dependsOn "generatePomFileForMavenPublication"
-build.dependsOn ":${packageName}-native:build"
-build.finalizedBy ":observe-ballerina-tests:build"
-//test.dependsOn ":${packageName}-native:build"
-//test.dependsOn ":${packageName}-compiler-plugin:build"
-test.finalizedBy ":observe-ballerina-tests:build"
+build.dependsOn(":observe-native:build")
+build.finalizedBy(":observe-ballerina-tests:build")
+test.finalizedBy(":observe-ballerina-tests:build")
 
 publishToMavenLocal.dependsOn build
 publish.dependsOn build

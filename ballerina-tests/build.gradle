@@ -31,10 +31,14 @@ dependencies {
     implementation group: 'org.testng', name: 'testng', version: "${testngVersion}"
 }
 
-def ballerinaDist = "build/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-${ballerinaLangVersion}"
+//def ballerinaDist = "build/target/extracted-distributions/jballerina-tools-zip/jballerina-tools-${ballerinaLangVersion}"
+def ballerinaDist = "build/target/extracted-distributions"
 
 configurations {
     jbalTools
+    testUtils {
+        transitive false
+    }
 }
 
 task unpackJballerinaTools(type: Copy) {
@@ -48,7 +52,7 @@ task copyObserveStdlib {
     dependsOn(":observe-ballerina:build")
     dependsOn(unpackJballerinaTools)
     doLast {
-        /* Copy HTTP module */
+        /* Copy Observe module */
         copy {
             from "$project.rootDir/ballerina/build/cache_parent/bala"
             into "${ballerinaDist}/jballerina-tools-zip/jballerina-tools-${ballerinaLangVersion}/repo/bala"
@@ -61,9 +65,18 @@ test {
     useTestNG() {
         suites 'src/test/resources/testng.xml'
     }
-    systemProperty 'ballerina.home', ballerinaDist
+    systemProperty 'ballerina.home', "${ballerinaDist}/jballerina-tools-zip/jballerina-tools-${ballerinaLangVersion}"
 
     testLogging.showStandardStreams = true
+
+    // For debugging
+//    debugOptions {
+//        enabled = true
+//        port = 4455
+//        server = true
+//        suspend = true
+//    }
+
     testLogging {
         events "PASSED", "FAILED", "SKIPPED"
         afterSuite { desc, result ->

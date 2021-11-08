@@ -45,6 +45,7 @@ import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_
  * This class wraps opentracing apis and exposes extern functions to use within ballerina.
  */
 public class OpenTracerBallerinaWrapper {
+
     private static final Logger log = LoggerFactory.getLogger(OpenTracerBallerinaWrapper.class);
 
     private static final OpenTracerBallerinaWrapper instance = new OpenTracerBallerinaWrapper();
@@ -57,15 +58,18 @@ public class OpenTracerBallerinaWrapper {
     static final int ROOT_SPAN_INDICATOR = -2;
 
     private OpenTracerBallerinaWrapper() {
+
         enabled = ObserveUtils.isTracingEnabled();
         tracerStore = TracersStore.getInstance();
     }
 
     public static OpenTracerBallerinaWrapper getInstance() {
+
         return instance;
     }
 
     private long startSpan(ObserverContext observerContext, boolean isClient, String spanName) {
+
         observerContext.setOperationName(spanName);
         TracingUtils.startObservation(observerContext, isClient);
         long spanId = this.spanIdCounter.getAndIncrement();
@@ -83,6 +87,7 @@ public class OpenTracerBallerinaWrapper {
      * @return unique id of the created span
      */
     public long startSpan(Environment env, String spanName, Map<String, String> tags, long parentSpanId) {
+
         if (!enabled) {
             return -1;
         }
@@ -137,11 +142,12 @@ public class OpenTracerBallerinaWrapper {
     /**
      * Method to mark a span as finished.
      *
-     * @param env current environment
+     * @param env    current environment
      * @param spanId id of the Span
      * @return boolean to indicate if span was finished
      */
     public boolean finishSpan(Environment env, long spanId) {
+
         if (!enabled) {
             return false;
         }

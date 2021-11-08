@@ -17,7 +17,9 @@
 import ballerina/jballerina.java;
 
 # Holds the event data.
-#
+# + name - Name of the event
+# + timestampMicros - Timestamp value in microseconds
+# + tags - Tags associated with the event
 public type Event record {
     string name;
     int timestampMicros;
@@ -25,7 +27,9 @@ public type Event record {
 };
 
 # Holds the span data.
-#
+# + name - Name of the event
+# + timestampMicros - Timestamp value in microseconds
+# + tags - Tags associated with the event
 public type Span record {
   string operationName;
   string traceId;

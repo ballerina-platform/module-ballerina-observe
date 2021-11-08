@@ -61,8 +61,9 @@ dependencies {
     implementation group: 'io.opentelemetry', name: 'opentelemetry-api', version: "${openTelemetryVersion}"
     implementation group: 'io.opentelemetry', name: 'opentelemetry-sdk-trace', version: "${openTelemetryVersion}"
     implementation group: 'io.opentelemetry', name: 'opentelemetry-sdk-testing', version: "${openTelemetryVersion}"
-    implementation 'com.google.code.gson:gson:2.8.8'
-    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation group: 'org.slf4j', name: 'slf4j-jdk14', version: "${slf4jVersion}"
+
 
 }
 

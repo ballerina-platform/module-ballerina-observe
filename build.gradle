@@ -71,6 +71,22 @@ subprojects {
     }
 }
 
+def moduleVersion = project.version.replace("-SNAPSHOT", "")
+
+release {
+    failOnPublishNeeded = false
+    failOnSnapshotDependencies = true
+
+    buildTasks = ['build']
+    versionPropertyFile = 'gradle.properties'
+    tagTemplate = 'v$version'
+
+    git {
+        requireBranch = "release-${moduleVersion}"
+        pushToRemote = 'origin'
+    }
+}
+
 task build {
     dependsOn('observe-ballerina:build')
 }

@@ -22,10 +22,10 @@
 <suite name="Transport test suite" parallel="false">
     <test name="Transport WebSocket Tests" parallel="false">
         <classes>
-            <class name="CounterTest"/>
-            <class name="MetricTest"/>
-            <class name="RegistryTest"/>
-            <class name="SummaryTest"/>
+            <class name="io.ballerina.stdlib.observe.CounterTest"/>
+            <class name="io.ballerina.stdlib.observe.MetricTest"/>
+            <class name="io.ballerina.stdlib.observe.RegistryTest"/>
+            <class name="io.ballerina.stdlib.observe.SummaryTest"/>
         </classes>
     </test>
 

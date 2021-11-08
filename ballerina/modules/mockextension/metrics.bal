@@ -17,14 +17,17 @@
 import ballerina/jballerina.java;
 
 # Holds the key and value of tag.
-#
+# + key - Key of the tag
+# + value - Value of the tag
 public type Tag record {
   string key;
   string value;
 };
 
 # Holds parameters required to id a metric.
-#
+# + name - Name of the metric
+# + description - Description for the metric
+# + tags - Tags included in metric
 public type MetricId record {
   string name;
   string description;
@@ -32,21 +35,28 @@ public type MetricId record {
 };
 
 # Holds percentile and value.
-#
+# + percentile - Percentile
+# + value - Value
 public type PercentileValue record {
   float percentile;
   float value;
 };
 
 # Holds a time duration.
-#
+# + seconds - Time window in seconds
+# + nanos - Time window in nano seconds
 public type TimeWindow record {
     int seconds;
     int nanos;
 };
 
 # Holds a snapshot of statistics.
-#
+# + timeWindow - Time window
+# + min - Minimum value
+# + max - Maximum value
+# + mean - Mean value
+# + stdDev - Standard Deviation value
+# + percentileValues - Percentile values
 public type Snapshot record {
   TimeWindow timeWindow;
   float min;
@@ -57,14 +67,19 @@ public type Snapshot record {
 };
 
 # Holds counter related metrics data.
-#
+# + id - Id value for counter
+# + value - Value
 public type Counter record {
   MetricId id;
   int value;
 };
 
 # Holds gauge related metrics data.
-#
+# + id - Id value for counter
+# + value - Value
+# + count - Number of occurrences
+# + sum - Summation
+# + snapshots - Snapshot values
 public type Gauge record {
   MetricId id;
   float value;
@@ -74,14 +89,17 @@ public type Gauge record {
 };
 
 # Holds polled gauge related metrics data.
-#
+# + id - Id value for PolledGauge
+# + value - Value
 public type PolledGauge record {
   MetricId id;
   float value;
 };
 
 # Holds metrics data.
-#
+# + counters - Counters associated with
+# + gauges - Gauges associated with
+# + polledGauges - PolledGauges associated with
 public type Metrics record {
   Counter[] counters;
   Gauge[] gauges;
