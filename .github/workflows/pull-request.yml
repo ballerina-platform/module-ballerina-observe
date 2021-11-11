@@ -1,4 +1,4 @@
-name: Ballerina HTTP module build
+name: Ballerina Observe module build
 
 on: [pull_request]
 
@@ -58,4 +58,4 @@ jobs:
             env:
                 packageUser: ${{ github.actor }}
                 packagePAT: ${{ secrets.GITHUB_TOKEN }}
-            run: ./gradlew build -x http-native:test
+            run: ./gradlew build -x observe-ballerina-tests:test
