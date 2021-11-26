@@ -17,6 +17,16 @@
 
 import org.apache.tools.ant.taskdefs.condition.Os
 
+apply plugin: 'io.ballerina.plugin'
+
+description = 'Ballerina - Observability'
+def packageName = "observe"
+def packageOrg = "ballerina"
+
+def tomlVersion = stripBallerinaExtensionVersion("${project.version}")
+def ballerinaTomlFilePlaceHolder = new File("${project.rootDir}/build-config/resources/Ballerina.toml")
+def ballerinaTomlFile = new File("$project.projectDir/Ballerina.toml")
+
 buildscript {
     repositories {
         maven {
@@ -32,15 +42,6 @@ buildscript {
     }
 }
 
-description = 'Ballerina - Observability'
-
-def packageName = "observe"
-def packageOrg = "ballerina"
-
-def tomlVersion = stripBallerinaExtensionVersion("${project.version}")
-def ballerinaTomlFilePlaceHolder = new File("${project.rootDir}/build-config/resources/Ballerina.toml")
-def ballerinaTomlFile = new File("$project.projectDir/Ballerina.toml")
-
 def stripBallerinaExtensionVersion(String extVersion) {
     if (extVersion.matches(project.ext.timestampedVersionRegex)) {
         def splitVersion = extVersion.split('-');
@@ -55,8 +56,6 @@ def stripBallerinaExtensionVersion(String extVersion) {
     }
 }
 
-apply plugin: 'io.ballerina.plugin'
-
 ballerina {
     packageOrganization = packageOrg
     module = packageName
@@ -64,22 +63,16 @@ ballerina {
 }
 
 configurations {
-    externalJars
+    externalJars {
+        transitive false
+    }
 }
 
 dependencies {
-    externalJars(group: 'io.opentelemetry', name: 'opentelemetry-api', version: "${openTelemetryVersion}") {
-        transitive = false
-    }
-    externalJars(group: 'io.opentelemetry', name: 'opentelemetry-sdk-trace', version: "${openTelemetryVersion}") {
-        transitive = false
-    }
-    externalJars(group: 'io.opentelemetry', name: 'opentelemetry-sdk-testing', version: "${openTelemetryVersion}") {
-        transitive = false
-    }
-    externalJars(group: 'org.testng', name: 'testng', version: "${testngVersion}") {
-        transitive = false
-    }
+    externalJars(group: 'io.opentelemetry', name: 'opentelemetry-api', version: "${openTelemetryVersion}")
+    externalJars(group: 'io.opentelemetry', name: 'opentelemetry-sdk-trace', version: "${openTelemetryVersion}")
+    externalJars(group: 'io.opentelemetry', name: 'opentelemetry-sdk-testing', version: "${openTelemetryVersion}")
+    externalJars(group: 'org.testng', name: 'testng', version: "${testngVersion}")
 }
 
 task updateTomlFiles {

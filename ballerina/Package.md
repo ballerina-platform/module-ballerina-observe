@@ -1,8 +1,10 @@
 ## Package Overview
 
-The `http` library is one of the standard library packages of the <a target="_blank" href="https://ballerina.io/">Ballerina</a> language.
+The `module-ballerina-observe` library is one of the standard library packages of the <a target="_blank" 
+href="https://ballerina.
+io/">Ballerina</a> language.
 
-It provides APIs for connecting and interacting with HTTP and HTTP2 endpoints over the network.
+It provides APIs for observing ballerina code.
 
 ## Report Issues
 

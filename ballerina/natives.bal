@@ -131,9 +131,6 @@ public  class Counter {
         externCounterInit(self);
     }
 
-    //# Performs the necessary native operations during the initialization of the counter.
-    //function initialize() = external;
-
     # Register the counter metric instance with the Metric Registry.
     #
     # + return - Returns error if there is any metric registered already with the same name
@@ -232,9 +229,6 @@ public class Gauge {
         self.statisticConfigs = statisticConfig ?: DEFAULT_GAUGE_STATS_CONFIG;
         externGaugeInit(self);
     }
-
-    //# Performs the necessary native operations during the initialization of the gauge.
-    //function initialize() = external;
 
     # Register the gauge metric instance with the Metric Registry.
     #

@@ -43,12 +43,7 @@ public class CounterTest extends MetricTest {
     public void setup() {
         String resourceRoot = Paths.get("src", "test", "resources").toAbsolutePath().toString();
         Path testResourceRoot = Paths.get(resourceRoot, "test-src");
-        try {
-            compileResult = BCompileUtil.compile(testResourceRoot.resolve("counter_test.bal").toString());
-
-        }catch (Exception e) {
-           e.printStackTrace();
-        }
+        compileResult = BCompileUtil.compile(testResourceRoot.resolve("counter_test.bal").toString());
     }
 
     @Test

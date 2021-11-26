@@ -27,9 +27,12 @@ public type Event record {
 };
 
 # Holds the span data.
-# + name - Name of the event
-# + timestampMicros - Timestamp value in microseconds
+# + operationName - Name of the operation
+# + traceId - Id for trace
+# + spanId - Id for span
+# + parentId - Id for parent span
 # + tags - Tags associated with the event
+# + events - Event details
 public type Span record {
   string operationName;
   string traceId;

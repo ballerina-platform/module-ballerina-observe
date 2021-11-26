@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 plugins {
@@ -23,31 +22,6 @@ plugins {
 }
 
 description = 'Ballerina - Observability Natives'
-
-repositories {
-    mavenLocal()
-    maven {
-        url = 'https://maven.wso2.org/nexus/content/repositories/releases/'
-    }
-
-    maven {
-        url = 'https://maven.wso2.org/nexus/content/groups/wso2-public/'
-    }
-
-    maven {
-        url = 'https://repo.maven.apache.org/maven2'
-    }
-
-    maven {
-        url = 'https://maven.pkg.github.com/ballerina-platform/*'
-        credentials {
-            username System.getenv("packageUser")
-            password System.getenv("packagePAT")
-        }
-    }
-}
-
-def packageName = "observe"
 
 dependencies {
     checkstyle project(':checkstyle')
@@ -61,10 +35,8 @@ dependencies {
     implementation group: 'io.opentelemetry', name: 'opentelemetry-api', version: "${openTelemetryVersion}"
     implementation group: 'io.opentelemetry', name: 'opentelemetry-sdk-trace', version: "${openTelemetryVersion}"
     implementation group: 'io.opentelemetry', name: 'opentelemetry-sdk-testing', version: "${openTelemetryVersion}"
-    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation group: 'com.google.code.gson', name: 'gson', version: "${gsonVersion}"
     implementation group: 'org.slf4j', name: 'slf4j-jdk14', version: "${slf4jVersion}"
-
-
 }
 
 checkstyle {
@@ -111,7 +83,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/ballerina-platform/module-ballerina-http")
+            url = uri("https://maven.pkg.github.com/ballerina-platform/module-ballerina-observe")
             credentials {
                 username = System.getenv("publishUser")
                 password = System.getenv("publishPAT")

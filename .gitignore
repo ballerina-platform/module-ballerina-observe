@@ -44,3 +44,6 @@ target/
 # Ballerina related ignores
 Ballerina.lock
 velocity.log*
+**/bin
+**/lib
+**/.settings
