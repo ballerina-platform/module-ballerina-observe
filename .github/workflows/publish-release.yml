@@ -22,7 +22,7 @@ jobs:
         env:
           packageUser: ${{ github.actor }}
           packagePAT: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew build -x check -x test
+        run: ./gradlew build -x check -x test  --stacktrace --console=plain
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
@@ -56,8 +56,8 @@ jobs:
           publishUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           publishPAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
         run: |
-          ./gradlew release -Prelease.useAutomaticVersion=true
-          ./gradlew -Pversion=${VERSION} publish -x test -PpublishToCentral=true
+          ./gradlew release -Prelease.useAutomaticVersion=true  --stacktrace --console=plain
+          ./gradlew -Pversion=${VERSION} publish -x test -PpublishToCentral=true  --stacktrace --console=plain
       - name: GitHub Release and Release Sync PR
         env:
           GITHUB_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}

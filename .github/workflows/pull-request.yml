@@ -19,7 +19,7 @@ jobs:
           packageUser: ${{ github.actor }}
           packagePAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
-            ./gradlew build
+            ./gradlew build  --stacktrace --console=plain
       - name: Generate Codecov Report
         uses: codecov/codecov-action@v1
 
@@ -40,8 +40,8 @@ jobs:
           packagePAT: ${{ secrets.GITHUB_TOKEN }}
           JAVA_TOOL_OPTIONS: -Dfile.encoding=UTF8
         run: |
-            ./gradlew.bat build -x test
-            ./gradlew.bat test
+            ./gradlew.bat build -x test --stacktrace --console=plain
+            ./gradlew.bat test --stacktrace --console=plain
 
   ubuntu-build-without-native-tests:
       name: Build on Ubuntu without native tests
@@ -58,4 +58,4 @@ jobs:
             env:
                 packageUser: ${{ github.actor }}
                 packagePAT: ${{ secrets.GITHUB_TOKEN }}
-            run: ./gradlew build -x observe-ballerina-tests:test
+            run: ./gradlew build -x observe-ballerina-tests:test --stacktrace --console=plain
