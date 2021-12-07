@@ -67,7 +67,7 @@ spotbugsMain {
 }
 
 spotbugsTest {
-    enabled = false
+    enabled = true
 }
 
 publishing {
