@@ -70,9 +70,6 @@ configurations {
 }
 
 dependencies {
-    externalJars(group: 'io.opentelemetry', name: 'opentelemetry-api', version: "${openTelemetryVersion}")
-    externalJars(group: 'io.opentelemetry', name: 'opentelemetry-sdk-trace', version: "${openTelemetryVersion}")
-    externalJars(group: 'io.opentelemetry', name: 'opentelemetry-sdk-testing', version: "${openTelemetryVersion}")
     externalJars(group: 'org.testng', name: 'testng', version: "${testngVersion}")
 }
 

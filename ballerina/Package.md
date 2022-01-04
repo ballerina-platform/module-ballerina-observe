@@ -1,9 +1,6 @@
 ## Package Overview
 
-The `module-ballerina-observe` library is one of the standard library packages of the <a target="_blank" 
-href="https://ballerina.
-io/">Ballerina</a> language.
-
+The `observe` library is one of the standard library packages of the <a target="_blank" href="https://ballerina.io/">Ballerina</a> language.
 It provides APIs for observing ballerina code.
 
 ## Report Issues
