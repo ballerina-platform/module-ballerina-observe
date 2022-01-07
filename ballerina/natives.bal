@@ -27,7 +27,7 @@ final map<string> DEFAULT_TAGS = {};
 # + tags - Tags to be associated to the span
 # + return - SpanId of the started span
 public function startRootSpan(string spanName, map<string>? tags = ()) returns int = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.StartRootSpan",
+    'class: "io.ballerina.observe.nativeimpl.StartRootSpan",
     name: "startRootSpan"
 } external;
 
@@ -38,7 +38,7 @@ public function startRootSpan(string spanName, map<string>? tags = ()) returns i
 # + parentSpanId - Id of the parent span or -1 if parent span should be taken from system trace
 # + return - SpanId of the started span
 public function startSpan(string spanName, map<string>? tags = (), int parentSpanId = -1) returns int|error = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.StartSpan",
+    'class: "io.ballerina.observe.nativeimpl.StartSpan",
     name: "startSpan"
 } external;
 
@@ -49,7 +49,7 @@ public function startSpan(string spanName, map<string>? tags = (), int parentSpa
 # + tagValue - Value of the tag
 # + return - An error if an error occurred while attaching tag to the span
 public isolated function addTagToSpan(string tagKey, string tagValue, int spanId = -1) returns error? = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.AddTagToSpan",
+    'class: "io.ballerina.observe.nativeimpl.AddTagToSpan",
     name: "addTagToSpan"
 } external;
 
@@ -59,7 +59,7 @@ public isolated function addTagToSpan(string tagKey, string tagValue, int spanId
 # + tagValue - Value of the tag
 # + return - An error if an error occurred while attaching tag to System Metrics
 public isolated function addTagToMetrics(string tagKey, string tagValue) returns error? = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.AddTagToMetrics",
+    'class: "io.ballerina.observe.nativeimpl.AddTagToMetrics",
     name: "addTagToMetrics"
 } external;
 
@@ -68,7 +68,7 @@ public isolated function addTagToMetrics(string tagKey, string tagValue) returns
 # + spanId - Id of span to finish
 # + return - An error if an error occurred while finishing the span
 public function finishSpan(int spanId) returns error? = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.FinishSpan",
+    'class: "io.ballerina.observe.nativeimpl.FinishSpan",
     name: "finishSpan"
 } external;
 
@@ -76,7 +76,7 @@ public function finishSpan(int spanId) returns error? = @java:Method {
 #
 # + return - Map of span context data (traceId and spanId).
 public isolated function getSpanContext() returns map<string> = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.GetSpanContext",
+    'class: "io.ballerina.observe.nativeimpl.GetSpanContext",
     name: "getSpanContext"
 } external;
 
@@ -84,7 +84,7 @@ public isolated function getSpanContext() returns map<string> = @java:Method {
 #
 # + return - Array of all registered metrics
 public function getAllMetrics() returns Metric[] = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.GetAllMetrics",
+    'class: "io.ballerina.observe.nativeimpl.GetAllMetrics",
     name: "getAllMetrics"
 } external;
 
@@ -94,7 +94,7 @@ public function getAllMetrics() returns Metric[] = @java:Method {
 # + tags - The key/value pair tags associated with the metric that should be looked up
 # + return - The metric instance
 public function lookupMetric(string name, map<string>? tags = ()) returns Counter|Gauge? = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.LookupMetric",
+    'class: "io.ballerina.observe.nativeimpl.LookupMetric",
     name: "lookupMetric"
 } external;
 
@@ -166,32 +166,32 @@ public  class Counter {
 }
 
 function externCounterInit(Counter counter) = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.CounterInitialize",
+    'class: "io.ballerina.observe.nativeimpl.CounterInitialize",
     name: "initialize"
 } external;
 
 function externCounterRegister(Counter counter) returns error? = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.CounterRegister",
+    'class: "io.ballerina.observe.nativeimpl.CounterRegister",
     name: "register"
 } external;
 
 function externCounterUnRegister(Counter counter) = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.CounterUnregister",
+    'class: "io.ballerina.observe.nativeimpl.CounterUnregister",
     name: "unregister"
 } external;
 
 function externCounterIncrement(Counter counter, int amount) = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.CounterIncrement",
+    'class: "io.ballerina.observe.nativeimpl.CounterIncrement",
     name: "increment"
 } external;
 
 function externCounterReset(Counter counter) = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.CounterReset",
+    'class: "io.ballerina.observe.nativeimpl.CounterReset",
     name: "reset"
 } external;
 
 function externCounterGetValue(Counter counter) returns int = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.CounterGetValue",
+    'class: "io.ballerina.observe.nativeimpl.CounterGetValue",
     name: "getValue"
 } external;
 
@@ -283,42 +283,42 @@ public class Gauge {
 }
 
 function externGaugeInit(Gauge gauge) = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeInitialize",
+    'class: "io.ballerina.observe.nativeimpl.GaugeInitialize",
     name: "initialize"
 } external;
 
 function externGaugeRegister(Gauge gauge) returns error? = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeRegister",
+    'class: "io.ballerina.observe.nativeimpl.GaugeRegister",
     name: "register"
 } external;
 
 function externGaugeUnRegister(Gauge gauge) = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeUnregister",
+    'class: "io.ballerina.observe.nativeimpl.GaugeUnregister",
     name: "unregister"
 } external;
 
 function externGaugeIncrement(Gauge gauge, float amount) = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeIncrement",
+    'class: "io.ballerina.observe.nativeimpl.GaugeIncrement",
     name: "increment"
 } external;
 
 function externGaugeDecrement(Gauge gauge, float amount) = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeDecrement",
+    'class: "io.ballerina.observe.nativeimpl.GaugeDecrement",
     name: "decrement"
 } external;
 
 function externGaugeGetValue(Gauge gauge) returns float = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeGetValue",
+    'class: "io.ballerina.observe.nativeimpl.GaugeGetValue",
     name: "getValue"
 } external;
 
 function externGaugeSetValue(Gauge gauge, float amount) = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeSetValue",
+    'class: "io.ballerina.observe.nativeimpl.GaugeSetValue",
     name: "setValue"
 } external;
 
 function externGaugeGetSnapshot(Gauge gauge) returns Snapshot[]? = @java:Method {
-    'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeGetSnapshot",
+    'class: "io.ballerina.observe.nativeimpl.GaugeGetSnapshot",
     name: "getSnapshot"
 } external;
 
