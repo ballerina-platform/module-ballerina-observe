@@ -124,5 +124,5 @@ public isolated function getMetrics() returns Metrics {
 # + return - The metrics currently in the metrics registry as a json
 isolated function externGetMetrics() returns json = @java:Method {
     name: "getMetrics",
-    'class: "io.ballerina.observe.mockextension.MetricsUtils"
+    'class: "io.ballerina.stdlib.observe.mockextension.MetricsUtils"
 } external;

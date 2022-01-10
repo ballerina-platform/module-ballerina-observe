@@ -1,5 +1,3 @@
-import io.ballerina.observe.mockextension.BMockTracerProvider;
-
 module io.ballerina.observability {
     requires com.google.gson;
     requires io.ballerina.lang;
@@ -12,5 +10,5 @@ module io.ballerina.observability {
     requires slf4j.api;
 
     provides io.ballerina.runtime.observability.tracer.spi.TracerProvider
-            with BMockTracerProvider;
+            with io.ballerina.stdlib.observe.mockextension.BMockTracerProvider;
 }
