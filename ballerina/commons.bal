@@ -72,6 +72,6 @@ public isolated function getTracingProvider() returns string = @java:Method {
 
 # Initializing the module.
 function externInitializeModule() = @java:Method {
-    'class: "io.ballerina.observe.nativeimpl.Utils",
+    'class: "io.ballerina.stdlib.observe.nativeimpl.Utils",
     name: "initializeModule"
 } external;
