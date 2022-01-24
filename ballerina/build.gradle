@@ -69,10 +69,6 @@ configurations {
     }
 }
 
-dependencies {
-    externalJars(group: 'org.testng', name: 'testng', version: "${testngVersion}")
-}
-
 task updateTomlFiles {
     doLast {
         def stdlibDependentTestngVersion = project.testngVersion
