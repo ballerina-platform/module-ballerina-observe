@@ -17,9 +17,6 @@
  */
 package io.ballerina.stdlib.observe;
 
-import org.ballerinalang.core.model.values.BBoolean;
-import org.ballerinalang.core.model.values.BInteger;
-import org.ballerinalang.core.model.values.BValue;
 import org.ballerinalang.test.BCompileUtil;
 import org.ballerinalang.test.BRunUtil;
 import org.ballerinalang.test.CompileResult;
@@ -48,37 +45,34 @@ public class RegistryTest extends MetricTest {
 
     @Test(groups = "RegistryTest.testGetAllMetrics", dependsOnGroups = "SummaryTest.testRegisteredGauge")
     public void testGetAllMetrics() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "getAllMetricsSize");
-        Assert.assertEquals(((BInteger) returns[0]).intValue(), 1,
+        Object returns = BRunUtil.invoke(compileResult, "getAllMetricsSize");
+        Assert.assertEquals(returns, 1L,
                 "There shouldn't be any metrics registered in initial state.");
     }
 
     @Test(groups = "RegistryTest.testRegister", dependsOnMethods = "testGetAllMetrics")
     public void testRegister() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "registerAngGetMetrics");
-        Assert.assertEquals(((BInteger) returns[0]).intValue(), 2,
+        Object returns = BRunUtil.invoke(compileResult, "registerAngGetMetrics");
+        Assert.assertEquals(returns, 2L,
                 "One metric should have been registered.");
     }
 
     @Test(dependsOnMethods = "testRegister")
     public void lookupMetric() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "lookupRegisteredMetrics");
-        Assert.assertEquals(((BBoolean) returns[0]).booleanValue(), true,
-                "Cannot be looked up a registered metric");
+        Object returns = BRunUtil.invoke(compileResult, "lookupRegisteredMetrics");
+        Assert.assertTrue((Boolean) returns, "Cannot be looked up a registered metric");
     }
 
     @Test(dependsOnMethods = "lookupMetric")
     public void lookupWithOnlyNameMetric() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "lookupRegisteredNameOnlyMetrics");
-        Assert.assertEquals(((BBoolean) returns[0]).booleanValue(), false,
-                "No metric should be returned for only name without tags");
+        Object returns = BRunUtil.invoke(compileResult, "lookupRegisteredNameOnlyMetrics");
+        Assert.assertFalse((Boolean) returns, "No metric should be returned for only name without tags");
     }
 
     @Test(dependsOnMethods = "lookupWithOnlyNameMetric")
     public void lookupMetricAndIncrement() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "lookupRegisterAndIncrement");
-        Assert.assertEquals(((BBoolean) returns[0]).booleanValue(), true,
-                "No metric should be returned for only name without tags");
+        Object returns = BRunUtil.invoke(compileResult, "lookupRegisterAndIncrement");
+        Assert.assertTrue((Boolean) returns, "No metric should be returned for only name without tags");
     }
 
 }

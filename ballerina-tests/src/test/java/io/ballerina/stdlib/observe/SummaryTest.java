@@ -17,8 +17,6 @@
  */
 package io.ballerina.stdlib.observe;
 
-import org.ballerinalang.core.model.values.BFloat;
-import org.ballerinalang.core.model.values.BValue;
 import org.ballerinalang.test.BCompileUtil;
 import org.ballerinalang.test.BRunUtil;
 import org.ballerinalang.test.CompileResult;
@@ -49,35 +47,35 @@ public class SummaryTest extends MetricTest {
 
     @Test
     public void testMaxSummary() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "testMaxSummary");
-        Assert.assertEquals(round(((BFloat) returns[0]).floatValue()), 3.0);
+        Object returns = BRunUtil.invoke(compileResult, "testMaxSummary");
+        Assert.assertEquals(round((Double) returns), 3.0);
     }
 
     @Test
     public void testMeanSummary() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "testMeanSummary");
-        Assert.assertEquals(round(((BFloat) returns[0]).floatValue()), 2.0);
+        Object returns = BRunUtil.invoke(compileResult, "testMeanSummary");
+        Assert.assertEquals(round((Double) returns), 2.0);
     }
 
     @Test
     public void testValueSummary() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "testValueSummary");
-        Assert.assertEquals(round(((BFloat) returns[0]).floatValue()), 500.0);
+        Object returns = BRunUtil.invoke(compileResult, "testValueSummary");
+        Assert.assertEquals(round((Double) returns), 500.0);
     }
 
     @Test
     public void testSummaryWithoutTags() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "testSummaryWithoutTags");
-        Assert.assertEquals(round(((BFloat) returns[0]).floatValue()), 2.0);
+        Object returns = BRunUtil.invoke(compileResult, "testSummaryWithoutTags");
+        Assert.assertEquals(round((Double) returns), 2.0);
     }
 
     @Test(groups = "SummaryTest.testRegisteredGauge")
     public void testRegisteredGauge() {
-        BValue[] returns = null;
+        Object returns = null;
         for (int i = 0; i < 3; i++) {
             returns = BRunUtil.invoke(compileResult, "registerAndIncrement");
         }
-        Assert.assertEquals(round(((BFloat) returns[0]).floatValue()), 3.0);
+        Assert.assertEquals(round((Double) returns), 3.0);
     }
 
     private double round(double value) {
