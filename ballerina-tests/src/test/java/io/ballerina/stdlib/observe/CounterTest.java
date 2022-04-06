@@ -17,10 +17,7 @@
  */
 package io.ballerina.stdlib.observe;
 
-import org.ballerinalang.core.model.values.BBoolean;
-import org.ballerinalang.core.model.values.BInteger;
-import org.ballerinalang.core.model.values.BValue;
-import org.ballerinalang.core.util.exceptions.BLangRuntimeException;
+import io.ballerina.runtime.internal.util.exceptions.BLangRuntimeException;
 import org.ballerinalang.test.BCompileUtil;
 import org.ballerinalang.test.BRunUtil;
 import org.ballerinalang.test.CompileResult;
@@ -48,14 +45,14 @@ public class CounterTest extends MetricTest {
 
     @Test
     public void testCounterIncrementByOne() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "testCounterIncrementByOne");
-        Assert.assertEquals(returns[0], new BInteger(1));
+        Object returns = BRunUtil.invoke(compileResult, "testCounterIncrementByOne");
+        Assert.assertEquals(returns, 1L);
     }
 
     @Test
     public void testCounterIncrement() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "testCounterIncrement");
-        Assert.assertEquals(returns[0], new BInteger(5));
+        Object returns = BRunUtil.invoke(compileResult, "testCounterIncrement");
+        Assert.assertEquals(returns, 5L);
     }
 
     @Test(dependsOnGroups = "RegistryTest.testRegister")
@@ -71,13 +68,13 @@ public class CounterTest extends MetricTest {
 
     @Test
     public void testCounterWithoutTags() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "testCounterWithoutTags");
-        Assert.assertEquals(returns[0], new BInteger(3));
+        Object returns = BRunUtil.invoke(compileResult, "testCounterWithoutTags");
+        Assert.assertEquals(returns, 3L);
     }
 
     @Test(dependsOnGroups = "RegistryTest.testRegister")
     public void testReset() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "testReset");
-        Assert.assertTrue(((BBoolean) returns[0]).booleanValue());
+        Object returns = BRunUtil.invoke(compileResult, "testReset");
+        Assert.assertTrue((Boolean) returns);
     }
 }
