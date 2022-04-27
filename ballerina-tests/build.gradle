@@ -55,8 +55,16 @@ task copyObserveStdlib {
     }
 }
 
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.enabled true
+    }
+}
+
 test {
     dependsOn(copyObserveStdlib)
+    finalizedBy jacocoTestReport
     useTestNG() {
         suites 'src/test/resources/testng.xml'
     }
