@@ -20,11 +20,29 @@ import ballerina/jballerina.java;
 configurable boolean enabled = false;
 configurable string provider = "";
 configurable boolean metricsEnabled = false;
-configurable string metricsReporter = "choreo";
+configurable string metricsReporter = "";
 configurable boolean tracingEnabled = false;
-configurable string tracingProvider = "choreo";
+configurable string tracingProvider = "";
 
-function init() {
+function init() returns error? {
+    boolean isMissingMetricsReporter = ((enabled || metricsEnabled) && (provider == "" && metricsReporter == ""));
+    boolean isMissingTracingProvider = ((enabled || tracingEnabled) && (provider == "" && tracingProvider == ""));
+    if (isMissingMetricsReporter || isMissingTracingProvider) {
+        string[] enabledObservers = [];
+        string[] missingProviders = [];
+        if (isMissingMetricsReporter) {
+            enabledObservers.push("metrics");
+            missingProviders.push("metrics reporter");
+        }
+        if (isMissingTracingProvider) {
+            enabledObservers.push("tracing");
+            missingProviders.push("tracing provider");
+        }
+        return error("Observability (" + " and ".join(...enabledObservers) + ") enabled without " +
+            " and ".join(...missingProviders) + ". Please visit https://central.ballerina.io/ballerina/observe for " +
+            "the list of officially supported Observability providers.");
+    }
+
     externInitializeModule();
 }
 
