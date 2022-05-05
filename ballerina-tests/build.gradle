@@ -55,10 +55,25 @@ task copyObserveStdlib {
     }
 }
 
+def classFilesArray = []
+
+task copyBallerinaClassFiles {
+    doFirst {
+        fileTree("$project.rootDir/ballerina/build/bal_build_target").include("**/*.jar").forEach { jar ->
+            zipTree(jar).matching {
+                include '**/*.class'
+            }.each { file -> classFilesArray.push(file) }
+        }
+    }
+}
+
 jacocoTestReport {
     dependsOn test
+    dependsOn copyBallerinaClassFiles
+    additionalClassDirs files(classFilesArray)
     reports {
         xml.enabled true
+        html.enabled true
     }
 }
 

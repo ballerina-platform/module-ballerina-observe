@@ -5,7 +5,7 @@ Ballerina Observe Internal Library
 [![Build](https://github.com/ballerina-platform/module-ballerina-http/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinai-observe/actions/workflows/build-timestamped-master.yml)
 [![Trivy](https://github.com/ballerina-platform/module-ballerina-http/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinai-observe/actions/workflows/trivy-scan.yml)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/ballerina-platform/module-ballerina-http.svg)](https://github.com/ballerina-platform/module-ballerinai-observe/commits/master)
-[![Github issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-standard-library/module/http.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-standard-library/labels/module%2Fhttp)
+[![Github issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-standard-library/module/http.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-standard-library/labels/module%2Fobserve)
 [![codecov](https://codecov.io/gh/ballerina-platform/module-ballerina-observe/branch/master/graph/badge.svg)](https://codecov.io/gh/ballerina-platform/module-ballerina-observe)
 
 This module contains internal configurations and initializations for Ballerina Observability. Ballerina supports Observability out of the box. You can user [module-ballerina-observe](https://github.com/ballerina-platform/module-ballerina-observe) in your ballerina project and enable observability features.
@@ -36,8 +36,6 @@ This repository only contains the source code for the package.
 
         export packageUser=<Username>
         export packagePAT=<Personal access token>
-
-3. Download and install [Docker](https://www.docker.com/).
 
 ### Build the source
 

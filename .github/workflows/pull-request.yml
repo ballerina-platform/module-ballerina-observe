@@ -19,7 +19,7 @@ jobs:
           packageUser: ${{ github.actor }}
           packagePAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
-            ./gradlew build  --stacktrace --console=plain
+            ./gradlew build test --stacktrace --console=plain
       - name: Generate Codecov Report
         uses: codecov/codecov-action@v2
 
