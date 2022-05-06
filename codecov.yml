@@ -1,0 +1,6 @@
+fixes:
+- "ballerina/observe/*/::ballerina/"
+- "ballerina/observe$0046mockextension/*/::ballerina/modules/mockextension"
+
+ignore:
+  - "**/tests"

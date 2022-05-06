@@ -55,8 +55,40 @@ task copyObserveStdlib {
     }
 }
 
+def classFilesArray = []
+
+task copyBallerinaClassFiles {
+    doFirst {
+        fileTree("$project.rootDir/ballerina/build/bal_build_target").include("**/*.jar").forEach { jar ->
+            zipTree(jar).matching {
+                exclude '**/tests/*'
+                exclude '**/$_init.class'
+                exclude '**/$value$Caller.class'
+                exclude '**/$value$Detail.class'
+                exclude '**/$value$DetailType.class'
+                exclude '**/$value$EmptyIterator.class'
+                exclude '**/$value$$anonType$_6.class'
+                exclude '**/$value$$anonType$_*.class'
+                exclude '**/$value$_Frame.class'
+                include '**/*.class'
+            }.each { file -> classFilesArray.push(file) }
+        }
+    }
+}
+
+jacocoTestReport {
+    dependsOn test
+    dependsOn copyBallerinaClassFiles
+    additionalClassDirs files(classFilesArray)
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
+
 test {
     dependsOn(copyObserveStdlib)
+    finalizedBy jacocoTestReport
     useTestNG() {
         suites 'src/test/resources/testng.xml'
     }
