@@ -5,20 +5,11 @@ Ballerina Observe Internal Library
 [![Build](https://github.com/ballerina-platform/module-ballerina-http/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinai-observe/actions/workflows/build-timestamped-master.yml)
 [![Trivy](https://github.com/ballerina-platform/module-ballerina-http/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinai-observe/actions/workflows/trivy-scan.yml)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/ballerina-platform/module-ballerina-http.svg)](https://github.com/ballerina-platform/module-ballerinai-observe/commits/master)
-[![Github issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-standard-library/module/http.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-standard-library/labels/module%2Fobserve)
 [![codecov](https://codecov.io/gh/ballerina-platform/module-ballerina-observe/branch/master/graph/badge.svg)](https://codecov.io/gh/ballerina-platform/module-ballerina-observe)
 
 This module contains internal configurations and initializations for Ballerina Observability. Ballerina supports Observability out of the box. You can user [module-ballerina-observe](https://github.com/ballerina-platform/module-ballerina-observe) in your ballerina project and enable observability features.
 
 By default, observability is not included in the executable created by Ballerina. It can be added by using the `--observability-included` build flag or by adding the following section to the `Ballerina.toml` file.
-
-
-
-## Issues and projects
-
-Issues and Projects tabs are disabled for this repository as this is part of the Ballerina Standard Library. To report bugs, request new features, start new discussions, view project boards, etc. please visit Ballerina Standard Library [parent repository](https://github.com/ballerina-platform/ballerina-standard-library).
-
-This repository only contains the source code for the package.
 
 ## Build from the source
 
