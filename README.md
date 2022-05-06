@@ -7,7 +7,6 @@ Ballerina Observe Internal Library
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/ballerina-platform/module-ballerina-http.svg)](https://github.com/ballerina-platform/module-ballerinai-observe/commits/master)
 [![codecov](https://codecov.io/gh/ballerina-platform/module-ballerina-observe/branch/master/graph/badge.svg)](https://codecov.io/gh/ballerina-platform/module-ballerina-observe)
 
-lerina project and enable observability features.
 This module contains internal configurations and initializations for Ballerina observability. Ballerina supports observability out of the box. You can use the [module-ballerina-observe](https://github.com/ballerina-platform/module-ballerina-observe) in your Ballerina project and enable observability features.
 
 By default, observability is not included in the executable created by Ballerina. It can be added by using the `--observability-included` build flag or by adding the following section to the `Ballerina.toml` file.
