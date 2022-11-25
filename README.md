@@ -86,6 +86,6 @@ All contributors are encouraged to read the [Ballerina Code of Conduct](https://
 
 * For more information go to the [`Observe` library](https://lib.ballerina.io/ballerina/observe/latest).
 * For example demonstrations of the usage, go to [Ballerina By Examples](https://ballerina.io/learn/by-example/).
-* Chat live with us via our [Slack channel](https://ballerina.io/community/slack/).
+* Chat live with us via our [Discord server](https://discord.gg/ballerinalang).
 * Post all technical questions on Stack Overflow with the [#ballerina](https://stackoverflow.com/questions/tagged/ballerina) tag.
 * View the [Ballerina performance test results](https://github.com/ballerina-platform/ballerina-lang/blob/master/performance/benchmarks/summary.md).
