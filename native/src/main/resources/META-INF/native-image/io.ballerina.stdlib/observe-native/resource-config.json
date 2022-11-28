@@ -1,0 +1,10 @@
+{
+  "resources": {
+    "includes": [
+      {
+        "pattern": "\\QMETA-INF/services/io.ballerina.runtime.observability.metrics.spi.MetricProvider\\E"
+      }
+    ]
+  },
+  "bundles": []
+}
