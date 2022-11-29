@@ -1,0 +1,13 @@
+{
+  "resources": {
+    "includes": [
+      {
+        "pattern": "\\QMETA-INF/services/io.ballerina.runtime.observability.metrics.spi.MetricProvider\\E"
+      },
+      {
+        "pattern": "\\QMETA-INF/services/io.opentelemetry.context.ContextStorageProvider\\E"
+      }
+    ]
+  },
+  "bundles": []
+}
