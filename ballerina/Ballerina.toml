@@ -1,12 +1,12 @@
 [package]
 org = "ballerina"
 name = "observe"
-version = "1.0.6"
+version = "1.0.7"
 distribution = "slbeta3"
 export = ["observe", "observe.mockextension" ]
 
 [[platform.java11.dependency]]
-path = "../native/build/libs/observe-native-1.0.6.jar"
+path = "../native/build/libs/observe-native-1.0.7.jar"
 groupId = "ballerina"
 artifactId = "observe"
 
