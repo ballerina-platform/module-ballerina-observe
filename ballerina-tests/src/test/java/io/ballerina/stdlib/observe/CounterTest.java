@@ -17,7 +17,6 @@
  */
 package io.ballerina.stdlib.observe;
 
-import io.ballerina.runtime.internal.util.exceptions.BLangRuntimeException;
 import org.ballerinalang.test.BCompileUtil;
 import org.ballerinalang.test.BRunUtil;
 import org.ballerinalang.test.CompileResult;
@@ -60,7 +59,7 @@ public class CounterTest extends MetricTest {
         try {
             BRunUtil.invoke(compileResult, "testCounterError");
             Assert.fail("Should not be registered again");
-        } catch (BLangRuntimeException e) {
+        } catch (RuntimeException e) {
             Assert.assertTrue(e.getMessage().contains("is already used for a different type of metric"),
                     "Unexpected Ballerina Error");
         }
