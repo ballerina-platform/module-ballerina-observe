@@ -5,6 +5,9 @@ version = "1.1.0"
 distribution = "2201.7.0"
 export = ["observe", "observe.mockextension" ]
 
+[platform.java11]
+graalvmCompatible = true
+
 [[platform.java11.dependency]]
 path = "../native/build/libs/observe-native-1.1.0-SNAPSHOT.jar"
 groupId = "ballerina"
