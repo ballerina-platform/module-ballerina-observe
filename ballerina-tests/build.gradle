@@ -80,8 +80,8 @@ jacocoTestReport {
     dependsOn copyBallerinaClassFiles
     additionalClassDirs files(classFilesArray)
     reports {
-        xml.enabled true
-        html.enabled true
+        xml.required = true
+        html.required = true
     }
 }
 
