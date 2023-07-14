@@ -17,7 +17,7 @@ By default, observability is not included in the executable created by Ballerina
 
 1. Download and install Java SE Development Kit (JDK) version 17 (from one of the following locations).
 
-    * [Oracle](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
+    * [Oracle](https://www.oracle.com/java/technologies/downloads/)
 
     * [OpenJDK](https://adoptopenjdk.net/)
 
