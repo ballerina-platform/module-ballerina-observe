@@ -120,6 +120,7 @@ publishing {
 updateTomlFiles.dependsOn copyStdlibs
 
 build.dependsOn(":observe-native:build")
+build.dependsOn(":observe-ballerina:generatePomFileForMavenPublication")
 build.finalizedBy(":observe-ballerina-tests:build")
 test.finalizedBy(":observe-ballerina-tests:build")
 
