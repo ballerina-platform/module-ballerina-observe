@@ -2,7 +2,7 @@
 org = "ballerina"
 name = "observe"
 version = "@toml.version@"
-distribution = "2201.7.0"
+distribution = "2201.8.0"
 export = ["observe", "observe.mockextension" ]
 
 [platform.java17]
