@@ -1,15 +1,15 @@
 [package]
 org = "ballerina"
 name = "observe"
-version = "1.1.0"
-distribution = "2201.7.0"
+version = "1.2.0"
+distribution = "2201.8.0"
 export = ["observe", "observe.mockextension" ]
 
 [platform.java17]
 graalvmCompatible = true
 
 [[platform.java17.dependency]]
-path = "../native/build/libs/observe-native-1.1.0.jar"
+path = "../native/build/libs/observe-native-1.2.0-SNAPSHOT.jar"
 groupId = "ballerina"
 artifactId = "observe"
 
