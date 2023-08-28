@@ -16,6 +16,7 @@
  * under the License.
  *
  */
+
 package io.ballerina.stdlib.observe.mockextension;
 
 import io.opentelemetry.api.common.Attributes;
