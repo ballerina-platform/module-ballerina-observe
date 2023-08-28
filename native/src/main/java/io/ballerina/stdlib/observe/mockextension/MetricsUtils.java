@@ -18,7 +18,6 @@
 
 package io.ballerina.stdlib.observe.mockextension;
 
-import com.google.gson.Gson;
 import io.ballerina.runtime.api.utils.JsonUtils;
 import io.ballerina.runtime.observability.metrics.Counter;
 import io.ballerina.runtime.observability.metrics.DefaultMetricRegistry;
@@ -29,6 +28,7 @@ import io.ballerina.stdlib.observe.mockextension.model.Metrics;
 import io.ballerina.stdlib.observe.mockextension.model.MockCounter;
 import io.ballerina.stdlib.observe.mockextension.model.MockGauge;
 import io.ballerina.stdlib.observe.mockextension.model.MockPolledGauge;
+import io.ballerina.stdlib.observe.mockextension.typeadapter.DurationTypeAdapter;
 
 /**
  * Java functions called from Ballerina related to metrics.
@@ -61,6 +61,8 @@ public class MetricsUtils {
                 metrics.addPolledGauge(mockPolledGauge);
             }
         }
-        return JsonUtils.parse(new Gson().toJson(metrics));
+
+        DurationTypeAdapter durationTypeAdapter = new DurationTypeAdapter();
+        return JsonUtils.parse(durationTypeAdapter.toJson(metrics));
     }
 }

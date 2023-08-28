@@ -15,7 +15,7 @@
  */
 
 plugins {
-    id 'java'
+    id 'java-library'
     id 'checkstyle'
     id 'com.github.spotbugs'
     id 'jacoco'
@@ -39,7 +39,7 @@ dependencies {
 }
 
 checkstyle {
-    toolVersion '7.8.2'
+    toolVersion '10.12.1'
     configFile rootProject.file("build-config/checkstyle/build/checkstyle.xml")
     configProperties = ["suppressionFile" : file("${rootDir}/build-config/checkstyle/build/suppressions.xml")]
 }
