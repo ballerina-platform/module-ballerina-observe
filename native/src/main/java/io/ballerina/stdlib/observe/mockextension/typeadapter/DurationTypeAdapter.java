@@ -19,7 +19,6 @@
 package io.ballerina.stdlib.observe.mockextension.typeadapter;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -37,9 +36,7 @@ import java.time.Duration;
  */
 public class DurationTypeAdapter implements JsonSerializer<Duration>, JsonDeserializer<Duration> {
 
-    private static final Gson gson = new GsonBuilder()
-            .registerTypeAdapter(Duration.class, new DurationTypeAdapter())
-            .create();
+    private static final Gson gson = new Gson();
 
     @Override
     public JsonElement serialize(final Duration duration, final Type typeOfSrc,
@@ -55,10 +52,6 @@ public class DurationTypeAdapter implements JsonSerializer<Duration>, JsonDeseri
                                  final JsonDeserializationContext context) throws JsonParseException {
         DurationData data = gson.fromJson(json, DurationData.class);
         return Duration.ofSeconds(data.seconds(), data.nanos());
-    }
-
-    public String toJson(Object object) {
-        return gson.toJson(object);
     }
 
     private record DurationData(long seconds, int nanos) { }
