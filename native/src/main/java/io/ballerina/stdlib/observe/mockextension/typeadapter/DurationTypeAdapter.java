@@ -53,31 +53,12 @@ public class DurationTypeAdapter implements JsonSerializer<Duration>, JsonDeseri
     public Duration deserialize(final JsonElement json, final Type typeOfT,
                                  final JsonDeserializationContext context) throws JsonParseException {
         DurationData data = gson.fromJson(json, DurationData.class);
-        return Duration.ofSeconds(data.getSeconds(), data.getNanos());
+        return Duration.ofSeconds(data.seconds(), data.nanos());
     }
 
     public String toJson(Object object) {
         return gson.toJson(object);
     }
 
-    private static class DurationData {
-
-        private long seconds;
-        private int nanos;
-
-        public DurationData() {}
-
-        public DurationData(long seconds, int nanos) {
-            this.seconds = seconds;
-            this.nanos = nanos;
-        }
-
-        public long getSeconds() {
-            return seconds;
-        }
-
-        public int getNanos() {
-            return nanos;
-        }
-    }
+    private record DurationData(long seconds, int nanos) {}
 }
