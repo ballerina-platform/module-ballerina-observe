@@ -60,5 +60,5 @@ public class DurationTypeAdapter implements JsonSerializer<Duration>, JsonDeseri
         return gson.toJson(object);
     }
 
-    private record DurationData(long seconds, int nanos) {}
+    private record DurationData(long seconds, int nanos) { }
 }
