@@ -38,18 +38,21 @@ import java.time.Duration;
  * Java functions called from Ballerina related to metrics.
  */
 public class MetricsUtils {
+
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Duration.class, new DurationTypeAdapter())
+            .create();
+
     public static Object getMetrics() {
         Metric[] metricsList = DefaultMetricRegistry.getInstance().getAllMetrics();
         Metrics metrics = new Metrics();
         for (Metric metric : metricsList) {
-            if (metric instanceof Counter) {
-                Counter counter = (Counter) metric;
+            if (metric instanceof Counter counter) {
                 MockCounter mockCounter = new MockCounter();
                 mockCounter.setId(counter.getId());
                 mockCounter.setValue(counter.getValue());
                 metrics.addCounter(mockCounter);
-            } else if (metric instanceof Gauge) {
-                Gauge gauge = (Gauge) metric;
+            } else if (metric instanceof Gauge gauge) {
                 MockGauge mockGauge = new MockGauge();
                 mockGauge.setId(gauge.getId());
                 mockGauge.setValue(gauge.getValue());
@@ -57,18 +60,13 @@ public class MetricsUtils {
                 mockGauge.setSum(gauge.getSum());
                 mockGauge.setSnapshots(gauge.getSnapshots());
                 metrics.addGauge(mockGauge);
-            } else if (metric instanceof PolledGauge) {
-                PolledGauge polledGauge = (PolledGauge) metric;
+            } else if (metric instanceof PolledGauge polledGauge) {
                 MockPolledGauge mockPolledGauge = new MockPolledGauge();
                 mockPolledGauge.setId(polledGauge.getId());
                 mockPolledGauge.setValue(polledGauge.getValue());
                 metrics.addPolledGauge(mockPolledGauge);
             }
         }
-
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Duration.class, new DurationTypeAdapter())
-                .create();
         return JsonUtils.parse(gson.toJson(metrics));
     }
 }
