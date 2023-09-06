@@ -19,6 +19,7 @@
 package io.ballerina.stdlib.observe.mockextension;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import io.ballerina.runtime.api.utils.JsonUtils;
 import io.ballerina.runtime.observability.metrics.Counter;
 import io.ballerina.runtime.observability.metrics.DefaultMetricRegistry;
@@ -29,23 +30,29 @@ import io.ballerina.stdlib.observe.mockextension.model.Metrics;
 import io.ballerina.stdlib.observe.mockextension.model.MockCounter;
 import io.ballerina.stdlib.observe.mockextension.model.MockGauge;
 import io.ballerina.stdlib.observe.mockextension.model.MockPolledGauge;
+import io.ballerina.stdlib.observe.mockextension.typeadapter.DurationTypeAdapter;
+
+import java.time.Duration;
 
 /**
  * Java functions called from Ballerina related to metrics.
  */
 public class MetricsUtils {
+
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Duration.class, new DurationTypeAdapter())
+            .create();
+
     public static Object getMetrics() {
         Metric[] metricsList = DefaultMetricRegistry.getInstance().getAllMetrics();
         Metrics metrics = new Metrics();
         for (Metric metric : metricsList) {
-            if (metric instanceof Counter) {
-                Counter counter = (Counter) metric;
+            if (metric instanceof Counter counter) {
                 MockCounter mockCounter = new MockCounter();
                 mockCounter.setId(counter.getId());
                 mockCounter.setValue(counter.getValue());
                 metrics.addCounter(mockCounter);
-            } else if (metric instanceof Gauge) {
-                Gauge gauge = (Gauge) metric;
+            } else if (metric instanceof Gauge gauge) {
                 MockGauge mockGauge = new MockGauge();
                 mockGauge.setId(gauge.getId());
                 mockGauge.setValue(gauge.getValue());
@@ -53,14 +60,13 @@ public class MetricsUtils {
                 mockGauge.setSum(gauge.getSum());
                 mockGauge.setSnapshots(gauge.getSnapshots());
                 metrics.addGauge(mockGauge);
-            } else if (metric instanceof PolledGauge) {
-                PolledGauge polledGauge = (PolledGauge) metric;
+            } else if (metric instanceof PolledGauge polledGauge) {
                 MockPolledGauge mockPolledGauge = new MockPolledGauge();
                 mockPolledGauge.setId(polledGauge.getId());
                 mockPolledGauge.setValue(polledGauge.getValue());
                 metrics.addPolledGauge(mockPolledGauge);
             }
         }
-        return JsonUtils.parse(new Gson().toJson(metrics));
+        return JsonUtils.parse(gson.toJson(metrics));
     }
 }

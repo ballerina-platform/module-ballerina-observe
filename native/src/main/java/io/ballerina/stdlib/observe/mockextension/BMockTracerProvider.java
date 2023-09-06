@@ -15,6 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package io.ballerina.stdlib.observe.mockextension;
 
 import io.ballerina.runtime.observability.tracer.spi.TracerProvider;
