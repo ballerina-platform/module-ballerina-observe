@@ -184,9 +184,10 @@ public class OpenTracerBallerinaWrapper {
         if (spanId == -1) {
             ObserverContext observer = ObserveUtils.getObserverContextOfCurrentFrame(env);
             if (observer == null) {
-                return ErrorCreator.createError(
-                        StringUtils.fromString(
-                                ("Span already finished. Can not add tag {" + tagKey + ":" + tagValue + "}")));
+                return null;
+//                return ErrorCreator.createError(
+//                        StringUtils.fromString(
+//                                ("Span already finished. Can not add tag {" + tagKey + ":" + tagValue + "}")));
             }
             span = observer.getSpan();
         } else {
