@@ -48,6 +48,8 @@ public class AddTagToMetrics {
             observerContext.customMetricTags.put(tagKey.getValue(), Tag.of(tagKey.getValue(), tagValue.getValue()));
             return null;
         }
+        // ObserverContext will be null if function is executed without entry point like main or resource
+        // function ex. initialising phase.
         return null;
     }
 }
