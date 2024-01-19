@@ -9,7 +9,7 @@ export = ["observe", "observe.mockextension" ]
 graalvmCompatible = true
 
 [[platform.java17.dependency]]
-path = "../native/build/libs/observe-native-1.2.2-SNAPSHOT.jar"
+path = "../native/build/libs/observe-native-1.2.2.jar"
 groupId = "ballerina"
 artifactId = "observe"
 
