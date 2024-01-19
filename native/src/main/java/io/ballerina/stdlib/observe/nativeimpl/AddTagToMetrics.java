@@ -20,8 +20,6 @@
 package io.ballerina.stdlib.observe.nativeimpl;
 
 import io.ballerina.runtime.api.Environment;
-import io.ballerina.runtime.api.creators.ErrorCreator;
-import io.ballerina.runtime.api.utils.StringUtils;
 import io.ballerina.runtime.api.values.BString;
 import io.ballerina.runtime.observability.ObserveUtils;
 import io.ballerina.runtime.observability.ObserverContext;
@@ -50,7 +48,8 @@ public class AddTagToMetrics {
             observerContext.customMetricTags.put(tagKey.getValue(), Tag.of(tagKey.getValue(), tagValue.getValue()));
             return null;
         }
-        return ErrorCreator.createError(
-                StringUtils.fromString("Can not add tag {" + tagKey + ":" + tagValue + "}"));
+        // ObserverContext will be null if function is executed without entry point like main or resource
+        // function ex. initialising phase.
+        return null;
     }
 }
