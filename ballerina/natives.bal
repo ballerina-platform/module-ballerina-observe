@@ -26,7 +26,7 @@ final map<string> DEFAULT_TAGS = {};
 # + spanName - Name of the span
 # + tags - Tags to be associated to the span
 # + return - SpanId of the started span
-public function startRootSpan(string spanName, map<string>? tags = ()) returns int = @java:Method {
+public isolated function startRootSpan(string spanName, map<string>? tags = ()) returns int = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.StartRootSpan",
     name: "startRootSpan"
 } external;
@@ -37,7 +37,7 @@ public function startRootSpan(string spanName, map<string>? tags = ()) returns i
 # + tags - Tags to be associated to the span
 # + parentSpanId - Id of the parent span or -1 if parent span should be taken from system trace
 # + return - SpanId of the started span
-public function startSpan(string spanName, map<string>? tags = (), int parentSpanId = -1) returns int|error = @java:Method {
+public isolated function startSpan(string spanName, map<string>? tags = (), int parentSpanId = -1) returns int|error = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.StartSpan",
     name: "startSpan"
 } external;
@@ -67,7 +67,7 @@ public isolated function addTagToMetrics(string tagKey, string tagValue) returns
 #
 # + spanId - Id of span to finish
 # + return - An error if an error occurred while finishing the span
-public function finishSpan(int spanId) returns error? = @java:Method {
+public isolated function finishSpan(int spanId) returns error? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.FinishSpan",
     name: "finishSpan"
 } external;
@@ -83,7 +83,7 @@ public isolated function getSpanContext() returns map<string> = @java:Method {
 # Retrieve all registered metrics including default metrics from the ballerina runtime, and user defined metrics.
 #
 # + return - Array of all registered metrics
-public function getAllMetrics() returns Metric[] = @java:Method {
+public isolated function getAllMetrics() returns Metric[] = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GetAllMetrics",
     name: "getAllMetrics"
 } external;
@@ -93,7 +93,7 @@ public function getAllMetrics() returns Metric[] = @java:Method {
 # + name - Name of the metric to lookup
 # + tags - The key/value pair tags associated with the metric that should be looked up
 # + return - The metric instance
-public function lookupMetric(string name, map<string>? tags = ()) returns Counter|Gauge? = @java:Method {
+public isolated function lookupMetric(string name, map<string>? tags = ()) returns Counter|Gauge? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.LookupMetric",
     name: "lookupMetric"
 } external;
@@ -103,7 +103,7 @@ public function lookupMetric(string name, map<string>? tags = ()) returns Counte
 # + name - Name of the counter metric
 # + description - Description of the counter metric
 # + metricTags - Tags associated with the counter metric
-public  class Counter {
+public class Counter {
 
     public string name;
     public string description;
@@ -165,32 +165,32 @@ public  class Counter {
     }
 }
 
-function externCounterInit(Counter counter) = @java:Method {
+isolated function externCounterInit(Counter counter) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.CounterInitialize",
     name: "initialize"
 } external;
 
-function externCounterRegister(Counter counter) returns error? = @java:Method {
+isolated function externCounterRegister(Counter counter) returns error? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.CounterRegister",
     name: "register"
 } external;
 
-function externCounterUnRegister(Counter counter) = @java:Method {
+isolated function externCounterUnRegister(Counter counter) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.CounterUnregister",
     name: "unregister"
 } external;
 
-function externCounterIncrement(Counter counter, int amount) = @java:Method {
+isolated function externCounterIncrement(Counter counter, int amount) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.CounterIncrement",
     name: "increment"
 } external;
 
-function externCounterReset(Counter counter) = @java:Method {
+isolated function externCounterReset(Counter counter) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.CounterReset",
     name: "reset"
 } external;
 
-function externCounterGetValue(Counter counter) returns int = @java:Method {
+isolated function externCounterGetValue(Counter counter) returns int = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.CounterGetValue",
     name: "getValue"
 } external;
@@ -282,42 +282,42 @@ public class Gauge {
     }
 }
 
-function externGaugeInit(Gauge gauge) = @java:Method {
+isolated function externGaugeInit(Gauge gauge) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeInitialize",
     name: "initialize"
 } external;
 
-function externGaugeRegister(Gauge gauge) returns error? = @java:Method {
+isolated function externGaugeRegister(Gauge gauge) returns error? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeRegister",
     name: "register"
 } external;
 
-function externGaugeUnRegister(Gauge gauge) = @java:Method {
+isolated function externGaugeUnRegister(Gauge gauge) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeUnregister",
     name: "unregister"
 } external;
 
-function externGaugeIncrement(Gauge gauge, float amount) = @java:Method {
+isolated function externGaugeIncrement(Gauge gauge, float amount) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeIncrement",
     name: "increment"
 } external;
 
-function externGaugeDecrement(Gauge gauge, float amount) = @java:Method {
+isolated function externGaugeDecrement(Gauge gauge, float amount) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeDecrement",
     name: "decrement"
 } external;
 
-function externGaugeGetValue(Gauge gauge) returns float = @java:Method {
+isolated function externGaugeGetValue(Gauge gauge) returns float = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeGetValue",
     name: "getValue"
 } external;
 
-function externGaugeSetValue(Gauge gauge, float amount) = @java:Method {
+isolated function externGaugeSetValue(Gauge gauge, float amount) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeSetValue",
     name: "setValue"
 } external;
 
-function externGaugeGetSnapshot(Gauge gauge) returns Snapshot[]? = @java:Method {
+isolated function externGaugeGetSnapshot(Gauge gauge) returns Snapshot[]? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeGetSnapshot",
     name: "getSnapshot"
 } external;
