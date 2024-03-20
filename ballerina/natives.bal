@@ -26,7 +26,7 @@ final map<string> DEFAULT_TAGS = {};
 # + spanName - Name of the span
 # + tags - Tags to be associated to the span
 # + return - SpanId of the started span
-public function startRootSpan(string spanName, map<string>? tags = ()) returns int = @java:Method {
+public isolated function startRootSpan(string spanName, map<string>? tags = ()) returns int = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.StartRootSpan",
     name: "startRootSpan"
 } external;
@@ -37,7 +37,7 @@ public function startRootSpan(string spanName, map<string>? tags = ()) returns i
 # + tags - Tags to be associated to the span
 # + parentSpanId - Id of the parent span or -1 if parent span should be taken from system trace
 # + return - SpanId of the started span
-public function startSpan(string spanName, map<string>? tags = (), int parentSpanId = -1) returns int|error = @java:Method {
+public isolated function startSpan(string spanName, map<string>? tags = (), int parentSpanId = -1) returns int|error = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.StartSpan",
     name: "startSpan"
 } external;
@@ -67,7 +67,7 @@ public isolated function addTagToMetrics(string tagKey, string tagValue) returns
 #
 # + spanId - Id of span to finish
 # + return - An error if an error occurred while finishing the span
-public function finishSpan(int spanId) returns error? = @java:Method {
+public isolated function finishSpan(int spanId) returns error? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.FinishSpan",
     name: "finishSpan"
 } external;
@@ -83,7 +83,7 @@ public isolated function getSpanContext() returns map<string> = @java:Method {
 # Retrieve all registered metrics including default metrics from the ballerina runtime, and user defined metrics.
 #
 # + return - Array of all registered metrics
-public function getAllMetrics() returns Metric[] = @java:Method {
+public isolated function getAllMetrics() returns Metric[] = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GetAllMetrics",
     name: "getAllMetrics"
 } external;
@@ -93,7 +93,7 @@ public function getAllMetrics() returns Metric[] = @java:Method {
 # + name - Name of the metric to lookup
 # + tags - The key/value pair tags associated with the metric that should be looked up
 # + return - The metric instance
-public function lookupMetric(string name, map<string>? tags = ()) returns Counter|Gauge? = @java:Method {
+public isolated function lookupMetric(string name, map<string>? tags = ()) returns Counter|Gauge? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.LookupMetric",
     name: "lookupMetric"
 } external;
@@ -103,7 +103,7 @@ public function lookupMetric(string name, map<string>? tags = ()) returns Counte
 # + name - Name of the counter metric
 # + description - Description of the counter metric
 # + metricTags - Tags associated with the counter metric
-public  class Counter {
+public class Counter {
 
     public string name;
     public string description;
