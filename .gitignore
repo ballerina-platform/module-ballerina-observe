@@ -47,4 +47,4 @@ velocity.log*
 **/bin
 **/lib
 **/.settings
-**/Dependencies.toml
+Dependencies.toml
