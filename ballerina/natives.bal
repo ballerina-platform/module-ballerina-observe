@@ -207,7 +207,7 @@ isolated function externCounterGetValue(Counter counter) returns int = @java:Met
 #                      of the gauge during its usage
 public isolated class Gauge {
 
-    public final  string name;
+    public final string name;
     public final string description;
     public final map<string> & readonly metricTags;
     public final StatisticConfig[] & readonly statisticConfigs;
