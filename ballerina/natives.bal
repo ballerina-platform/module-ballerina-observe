@@ -16,10 +16,10 @@
 
 import ballerina/jballerina.java;
 
-final StatisticConfig[] DEFAULT_GAUGE_STATS_CONFIG = [{ timeWindow: 600000, buckets: 5,
+isolated final StatisticConfig[] DEFAULT_GAUGE_STATS_CONFIG = [{ timeWindow: 600000, buckets: 5,
     percentiles: [0.33, 0.5, 0.66, 0.75, 0.95, 0.99, 0.999] }];
 
-final map<string> DEFAULT_TAGS = {};
+isolated final map<string> DEFAULT_TAGS = {};
 
 # Start a span with no parent span.
 #
@@ -103,11 +103,11 @@ public isolated function lookupMetric(string name, map<string>? tags = ()) retur
 # + name - Name of the counter metric
 # + description - Description of the counter metric
 # + metricTags - Tags associated with the counter metric
-public class Counter {
+public isolated class Counter {
 
-    public string name;
-    public string description;
-    public map<string> metricTags;
+    public final  string name;
+    public final string description;
+    public final map<string> & readonly metricTags;
 
     # This instantiates the Counter object. Name field is mandatory, and description and tags fields
     # are optional and have its own default values when no params are passed.
@@ -116,7 +116,7 @@ public class Counter {
     # + desc - Description of the Counter instance. If no description is provided, the the default empty string
     #          will be used
     # + tags - The key/value pair of Tags. If no tags are provided, the default nil value will be used
-    public function init(string name, string? desc = "", map<string>? tags = ()) {
+    public isolated function init(string name, string? desc = "", map<string>? tags = ()) {
         self.name = name;
         if (desc is string) {
             self.description = desc;
@@ -124,9 +124,11 @@ public class Counter {
             self.description = "";
         }
         if (tags is map<string>) {
-            self.metricTags = tags;
+            self.metricTags = tags.cloneReadOnly();
         } else {
-            self.metricTags = DEFAULT_TAGS;
+            lock {
+	            self.metricTags = DEFAULT_TAGS.cloneReadOnly();
+            }
         }
         externCounterInit(self);
     }
@@ -135,7 +137,7 @@ public class Counter {
     #
     # + return - Returns error if there is any metric registered already with the same name
     #            but different parameters or in a different kind
-    public function register() returns error? {
+    public isolated function register() returns error? {
         return externCounterRegister(self);
     }
 
@@ -148,7 +150,7 @@ public class Counter {
     #
     # + amount - The amount by which the value needs to be increased. The amount is defaulted as 1 and will be
     #            used if there is no amount passed in
-    public function increment(int amount = 1) {
+    public isolated function increment(int amount = 1) {
         externCounterIncrement(self, amount);
     }
 
@@ -160,7 +162,7 @@ public class Counter {
     # Retrieves the counter's current value.
     #
     # + return - The current value of the counter
-    public function getValue() returns int {
+    public isolated function getValue() returns int {
         return externCounterGetValue(self);
     }
 }
@@ -203,12 +205,12 @@ isolated function externCounterGetValue(Counter counter) returns int = @java:Met
 # + metricTags - Tags associated with the counter metric
 # + statisticConfigs - Array of StatisticConfig objects which defines about the statistical calculation
 #                      of the gauge during its usage
-public class Gauge {
+public isolated class Gauge {
 
-    public string name;
-    public string description;
-    public map<string> metricTags;
-    public StatisticConfig[] statisticConfigs;
+    public final  string name;
+    public final string description;
+    public final map<string> & readonly metricTags;
+    public final StatisticConfig[] & readonly statisticConfigs;
 
     # This instantiates the Gauge object. Name field is mandatory, and description, tags, and statitics config fields
     # are optional and have its own default values when no params are passed.
@@ -221,12 +223,16 @@ public class Gauge {
     #                     statistics configurations array is passed, then statistics calculation will be disabled.
     #                     If nil () is passed, then default statistics configs will be used for the statitics
     #                     calculation
-    public function init(string name, string? desc = "", map<string>? tags = (),
+    public isolated function init(string name, string? desc = "", map<string>? tags = (),
                StatisticConfig[]? statisticConfig = ()) {
         self.name = name;
         self.description = desc ?: "";
-        self.metricTags = tags ?: DEFAULT_TAGS;
-        self.statisticConfigs = statisticConfig ?: DEFAULT_GAUGE_STATS_CONFIG;
+        lock {
+	        self.metricTags = tags.cloneReadOnly() ?: DEFAULT_TAGS.cloneReadOnly();
+        }
+        lock {
+	        self.statisticConfigs = statisticConfig.cloneReadOnly() ?: DEFAULT_GAUGE_STATS_CONFIG.cloneReadOnly();
+        }
         externGaugeInit(self);
     }
 
@@ -234,12 +240,12 @@ public class Gauge {
     #
     # + return - Returns error if there is any metric registered already with the same name
     #            but different parameters or in a different kind
-    public function register() returns error? {
+    public isolated function register() returns error? {
         return externGaugeRegister(self);
     }
 
     # Unregister the counter metric instance with the Metric Registry.
-    public function unregister() {
+    public isolated function unregister() {
         externGaugeUnRegister(self);
     }
 
@@ -247,7 +253,7 @@ public class Gauge {
     #
     # + amount - The amount by which the value of gauge needs to be increased.
     #            The amount is defaulted as 1.0 and will be used if there is no amount passed in
-    public function increment(float amount = 1.0) {
+    public isolated function increment(float amount = 1.0) {
         externGaugeIncrement(self, amount);
     }
 
@@ -255,21 +261,21 @@ public class Gauge {
     #
     # + amount - The amount by which the value of gauge needs to be decreased.
     #            The amount is defaulted as 1.0 and will be used if there is no amount passed in
-    public function decrement(float amount = 1.0) {
+    public isolated function decrement(float amount = 1.0) {
         externGaugeDecrement(self, amount);
     }
 
     # Sets the instantaneous value for gauge.
     #
     # + amount - The instantaneous value that needs to be set as gauge value
-    public function setValue(float amount) {
+    public isolated function setValue(float amount) {
         return externGaugeSetValue(self, amount);
     }
 
     # Retrieves the gauge's current value.
     #
     # + return - The current value of the gauge
-    public function getValue() returns float {
+    public isolated function getValue() returns float {
         return externGaugeGetValue(self);
     }
 
@@ -277,7 +283,7 @@ public class Gauge {
     #
     # + return - Array of the statistics snapshots.
     #            If there is no statisticsConfigs provided, then it will be nil
-    public function getSnapshot() returns Snapshot[]? {
+    public isolated function getSnapshot() returns Snapshot[]? {
         return externGaugeGetSnapshot(self);
     }
 }
