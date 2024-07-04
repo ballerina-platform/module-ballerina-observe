@@ -19,7 +19,7 @@ import ballerina/jballerina.java;
 isolated final StatisticConfig[] DEFAULT_GAUGE_STATS_CONFIG = [{ timeWindow: 600000, buckets: 5,
     percentiles: [0.33, 0.5, 0.66, 0.75, 0.95, 0.99, 0.999] }];
 
-isolated final map<string> DEFAULT_TAGS = {};
+isolated final map<string> defaultTags = {};
 
 # Start a span with no parent span.
 #
@@ -105,7 +105,7 @@ public isolated function lookupMetric(string name, map<string>? tags = ()) retur
 # + metricTags - Tags associated with the counter metric
 public isolated class Counter {
 
-    public final  string name;
+    public final string name;
     public final string description;
     public final map<string> & readonly metricTags;
 
@@ -127,7 +127,7 @@ public isolated class Counter {
             self.metricTags = tags.cloneReadOnly();
         } else {
             lock {
-	            self.metricTags = DEFAULT_TAGS.cloneReadOnly();
+	            self.metricTags = defaultTags.cloneReadOnly();
             }
         }
         externCounterInit(self);
@@ -228,7 +228,7 @@ public isolated class Gauge {
         self.name = name;
         self.description = desc ?: "";
         lock {
-	        self.metricTags = tags.cloneReadOnly() ?: DEFAULT_TAGS.cloneReadOnly();
+	        self.metricTags = tags.cloneReadOnly() ?: defaultTags.cloneReadOnly();
         }
         lock {
 	        self.statisticConfigs = statisticConfig.cloneReadOnly() ?: DEFAULT_GAUGE_STATS_CONFIG.cloneReadOnly();
