@@ -123,11 +123,7 @@ public isolated class Counter {
         } else {
             self.description = "";
         }
-        if (tags is map<string>) {
-            self.metricTags = tags.cloneReadOnly();
-        } else {
-            self.metricTags = DEFAULT_TAGS;
-        }
+        self.metricTags = tags is map<string> ? tags.cloneReadOnly() : DEFAULT_TAGS;
         externCounterInit(self);
     }
 
@@ -225,8 +221,8 @@ public isolated class Gauge {
                StatisticConfig[]? statisticConfig = ()) {
         self.name = name;
         self.description = desc ?: "";
-        self.metricTags = tags.cloneReadOnly() ?: DEFAULT_TAGS;
-        self.statisticConfigs = statisticConfig.cloneReadOnly() ?: defaultGaugeStatsConfig;
+        self.metricTags = tags is () ? DEFAULT_TAGS : tags.cloneReadOnly();
+        self.statisticConfigs = statisticConfig is () ? defaultGaugeStatsConfig : statisticConfig.cloneReadOnly();
         externGaugeInit(self);
     }
 
