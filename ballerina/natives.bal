@@ -16,17 +16,17 @@
 
 import ballerina/jballerina.java;
 
-final StatisticConfig[] DEFAULT_GAUGE_STATS_CONFIG = [{ timeWindow: 600000, buckets: 5,
+final StatisticConfig[] & readonly defaultGaugeStatsConfig = [{ timeWindow: 600000, buckets: 5,
     percentiles: [0.33, 0.5, 0.66, 0.75, 0.95, 0.99, 0.999] }];
 
-final map<string> DEFAULT_TAGS = {};
+const map<string> DEFAULT_TAGS = {};
 
 # Start a span with no parent span.
 #
 # + spanName - Name of the span
 # + tags - Tags to be associated to the span
 # + return - SpanId of the started span
-public function startRootSpan(string spanName, map<string>? tags = ()) returns int = @java:Method {
+public isolated function startRootSpan(string spanName, map<string>? tags = ()) returns int = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.StartRootSpan",
     name: "startRootSpan"
 } external;
@@ -37,7 +37,7 @@ public function startRootSpan(string spanName, map<string>? tags = ()) returns i
 # + tags - Tags to be associated to the span
 # + parentSpanId - Id of the parent span or -1 if parent span should be taken from system trace
 # + return - SpanId of the started span
-public function startSpan(string spanName, map<string>? tags = (), int parentSpanId = -1) returns int|error = @java:Method {
+public isolated function startSpan(string spanName, map<string>? tags = (), int parentSpanId = -1) returns int|error = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.StartSpan",
     name: "startSpan"
 } external;
@@ -67,7 +67,7 @@ public isolated function addTagToMetrics(string tagKey, string tagValue) returns
 #
 # + spanId - Id of span to finish
 # + return - An error if an error occurred while finishing the span
-public function finishSpan(int spanId) returns error? = @java:Method {
+public isolated function finishSpan(int spanId) returns error? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.FinishSpan",
     name: "finishSpan"
 } external;
@@ -83,7 +83,7 @@ public isolated function getSpanContext() returns map<string> = @java:Method {
 # Retrieve all registered metrics including default metrics from the ballerina runtime, and user defined metrics.
 #
 # + return - Array of all registered metrics
-public function getAllMetrics() returns Metric[] = @java:Method {
+public isolated function getAllMetrics() returns Metric[] = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GetAllMetrics",
     name: "getAllMetrics"
 } external;
@@ -93,7 +93,7 @@ public function getAllMetrics() returns Metric[] = @java:Method {
 # + name - Name of the metric to lookup
 # + tags - The key/value pair tags associated with the metric that should be looked up
 # + return - The metric instance
-public function lookupMetric(string name, map<string>? tags = ()) returns Counter|Gauge? = @java:Method {
+public isolated function lookupMetric(string name, map<string>? tags = ()) returns Counter|Gauge? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.LookupMetric",
     name: "lookupMetric"
 } external;
@@ -103,11 +103,11 @@ public function lookupMetric(string name, map<string>? tags = ()) returns Counte
 # + name - Name of the counter metric
 # + description - Description of the counter metric
 # + metricTags - Tags associated with the counter metric
-public  class Counter {
+public isolated class Counter {
 
-    public string name;
-    public string description;
-    public map<string> metricTags;
+    public final string name;
+    public final string description;
+    public final map<string> & readonly metricTags;
 
     # This instantiates the Counter object. Name field is mandatory, and description and tags fields
     # are optional and have its own default values when no params are passed.
@@ -116,18 +116,14 @@ public  class Counter {
     # + desc - Description of the Counter instance. If no description is provided, the the default empty string
     #          will be used
     # + tags - The key/value pair of Tags. If no tags are provided, the default nil value will be used
-    public function init(string name, string? desc = "", map<string>? tags = ()) {
+    public isolated function init(string name, string? desc = "", map<string>? tags = ()) {
         self.name = name;
         if (desc is string) {
             self.description = desc;
         } else {
             self.description = "";
         }
-        if (tags is map<string>) {
-            self.metricTags = tags;
-        } else {
-            self.metricTags = DEFAULT_TAGS;
-        }
+        self.metricTags = tags is map<string> ? tags.cloneReadOnly() : DEFAULT_TAGS;
         externCounterInit(self);
     }
 
@@ -135,7 +131,7 @@ public  class Counter {
     #
     # + return - Returns error if there is any metric registered already with the same name
     #            but different parameters or in a different kind
-    public function register() returns error? {
+    public isolated function register() returns error? {
         return externCounterRegister(self);
     }
 
@@ -148,7 +144,7 @@ public  class Counter {
     #
     # + amount - The amount by which the value needs to be increased. The amount is defaulted as 1 and will be
     #            used if there is no amount passed in
-    public function increment(int amount = 1) {
+    public isolated function increment(int amount = 1) {
         externCounterIncrement(self, amount);
     }
 
@@ -160,37 +156,37 @@ public  class Counter {
     # Retrieves the counter's current value.
     #
     # + return - The current value of the counter
-    public function getValue() returns int {
+    public isolated function getValue() returns int {
         return externCounterGetValue(self);
     }
 }
 
-function externCounterInit(Counter counter) = @java:Method {
+isolated function externCounterInit(Counter counter) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.CounterInitialize",
     name: "initialize"
 } external;
 
-function externCounterRegister(Counter counter) returns error? = @java:Method {
+isolated function externCounterRegister(Counter counter) returns error? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.CounterRegister",
     name: "register"
 } external;
 
-function externCounterUnRegister(Counter counter) = @java:Method {
+isolated function externCounterUnRegister(Counter counter) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.CounterUnregister",
     name: "unregister"
 } external;
 
-function externCounterIncrement(Counter counter, int amount) = @java:Method {
+isolated function externCounterIncrement(Counter counter, int amount) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.CounterIncrement",
     name: "increment"
 } external;
 
-function externCounterReset(Counter counter) = @java:Method {
+isolated function externCounterReset(Counter counter) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.CounterReset",
     name: "reset"
 } external;
 
-function externCounterGetValue(Counter counter) returns int = @java:Method {
+isolated function externCounterGetValue(Counter counter) returns int = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.CounterGetValue",
     name: "getValue"
 } external;
@@ -203,12 +199,12 @@ function externCounterGetValue(Counter counter) returns int = @java:Method {
 # + metricTags - Tags associated with the counter metric
 # + statisticConfigs - Array of StatisticConfig objects which defines about the statistical calculation
 #                      of the gauge during its usage
-public class Gauge {
+public isolated class Gauge {
 
-    public string name;
-    public string description;
-    public map<string> metricTags;
-    public StatisticConfig[] statisticConfigs;
+    public final string name;
+    public final string description;
+    public final map<string> & readonly metricTags;
+    public final StatisticConfig[] & readonly statisticConfigs;
 
     # This instantiates the Gauge object. Name field is mandatory, and description, tags, and statitics config fields
     # are optional and have its own default values when no params are passed.
@@ -221,12 +217,12 @@ public class Gauge {
     #                     statistics configurations array is passed, then statistics calculation will be disabled.
     #                     If nil () is passed, then default statistics configs will be used for the statitics
     #                     calculation
-    public function init(string name, string? desc = "", map<string>? tags = (),
+    public isolated function init(string name, string? desc = "", map<string>? tags = (),
                StatisticConfig[]? statisticConfig = ()) {
         self.name = name;
         self.description = desc ?: "";
-        self.metricTags = tags ?: DEFAULT_TAGS;
-        self.statisticConfigs = statisticConfig ?: DEFAULT_GAUGE_STATS_CONFIG;
+        self.metricTags = tags is () ? DEFAULT_TAGS : tags.cloneReadOnly();
+        self.statisticConfigs = statisticConfig is () ? defaultGaugeStatsConfig : statisticConfig.cloneReadOnly();
         externGaugeInit(self);
     }
 
@@ -234,12 +230,12 @@ public class Gauge {
     #
     # + return - Returns error if there is any metric registered already with the same name
     #            but different parameters or in a different kind
-    public function register() returns error? {
+    public isolated function register() returns error? {
         return externGaugeRegister(self);
     }
 
     # Unregister the counter metric instance with the Metric Registry.
-    public function unregister() {
+    public isolated function unregister() {
         externGaugeUnRegister(self);
     }
 
@@ -247,7 +243,7 @@ public class Gauge {
     #
     # + amount - The amount by which the value of gauge needs to be increased.
     #            The amount is defaulted as 1.0 and will be used if there is no amount passed in
-    public function increment(float amount = 1.0) {
+    public isolated function increment(float amount = 1.0) {
         externGaugeIncrement(self, amount);
     }
 
@@ -255,21 +251,21 @@ public class Gauge {
     #
     # + amount - The amount by which the value of gauge needs to be decreased.
     #            The amount is defaulted as 1.0 and will be used if there is no amount passed in
-    public function decrement(float amount = 1.0) {
+    public isolated function decrement(float amount = 1.0) {
         externGaugeDecrement(self, amount);
     }
 
     # Sets the instantaneous value for gauge.
     #
     # + amount - The instantaneous value that needs to be set as gauge value
-    public function setValue(float amount) {
+    public isolated function setValue(float amount) {
         return externGaugeSetValue(self, amount);
     }
 
     # Retrieves the gauge's current value.
     #
     # + return - The current value of the gauge
-    public function getValue() returns float {
+    public isolated function getValue() returns float {
         return externGaugeGetValue(self);
     }
 
@@ -277,47 +273,47 @@ public class Gauge {
     #
     # + return - Array of the statistics snapshots.
     #            If there is no statisticsConfigs provided, then it will be nil
-    public function getSnapshot() returns Snapshot[]? {
+    public isolated function getSnapshot() returns Snapshot[]? {
         return externGaugeGetSnapshot(self);
     }
 }
 
-function externGaugeInit(Gauge gauge) = @java:Method {
+isolated function externGaugeInit(Gauge gauge) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeInitialize",
     name: "initialize"
 } external;
 
-function externGaugeRegister(Gauge gauge) returns error? = @java:Method {
+isolated function externGaugeRegister(Gauge gauge) returns error? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeRegister",
     name: "register"
 } external;
 
-function externGaugeUnRegister(Gauge gauge) = @java:Method {
+isolated function externGaugeUnRegister(Gauge gauge) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeUnregister",
     name: "unregister"
 } external;
 
-function externGaugeIncrement(Gauge gauge, float amount) = @java:Method {
+isolated function externGaugeIncrement(Gauge gauge, float amount) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeIncrement",
     name: "increment"
 } external;
 
-function externGaugeDecrement(Gauge gauge, float amount) = @java:Method {
+isolated function externGaugeDecrement(Gauge gauge, float amount) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeDecrement",
     name: "decrement"
 } external;
 
-function externGaugeGetValue(Gauge gauge) returns float = @java:Method {
+isolated function externGaugeGetValue(Gauge gauge) returns float = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeGetValue",
     name: "getValue"
 } external;
 
-function externGaugeSetValue(Gauge gauge, float amount) = @java:Method {
+isolated function externGaugeSetValue(Gauge gauge, float amount) = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeSetValue",
     name: "setValue"
 } external;
 
-function externGaugeGetSnapshot(Gauge gauge) returns Snapshot[]? = @java:Method {
+isolated function externGaugeGetSnapshot(Gauge gauge) returns Snapshot[]? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GaugeGetSnapshot",
     name: "getSnapshot"
 } external;
