@@ -23,7 +23,7 @@ configurable boolean metricsEnabled = false;
 configurable string metricsReporter = "";
 configurable boolean tracingEnabled = false;
 configurable string tracingProvider = "";
-configurable boolean observabilityLogsEnabled = false;
+configurable boolean metricsLogsEnabled = false;
 
 function init() returns error? {
     boolean isMissingMetricsReporter = ((enabled || metricsEnabled) && (provider == "" && metricsReporter == ""));
