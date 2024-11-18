@@ -5,30 +5,30 @@ version = "@toml.version@"
 distribution = "2201.10.0"
 export = ["observe", "observe.mockextension" ]
 
-[platform.java17]
+[platform.java21]
 graalvmCompatible = true
 
-[[platform.java17.dependency]]
+[[platform.java21.dependency]]
 path = "../native/build/libs/observe-native-@project.version@.jar"
 groupId = "ballerina"
 artifactId = "observe"
 
-[[platform.java17.dependency]]
+[[platform.java21.dependency]]
 groupId = "io.opentelemetry"
 artifactId = "opentelemetry-sdk-trace"
 version = "@opentelemetry.version@"
 
-[[platform.java17.dependency]]
+[[platform.java21.dependency]]
 groupId = "io.opentelemetry"
 artifactId = "opentelemetry-sdk-testing"
 version = "@opentelemetry.version@"
 
-[[platform.java17.dependency]]
+[[platform.java21.dependency]]
 groupId = "io.opentelemetry"
 artifactId = "opentelemetry-sdk-common"
 version = "@opentelemetry.version@"
 
-[[platform.java17.dependency]]
+[[platform.java21.dependency]]
 groupId = "io.opentelemetry"
 artifactId = "opentelemetry-semconv"
 version = "@opentelemetry.version@-alpha"
