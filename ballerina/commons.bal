@@ -24,13 +24,11 @@ configurable string metricsReporter = "";
 configurable boolean tracingEnabled = false;
 configurable string tracingProvider = "";
 configurable boolean metricsLogsEnabled = false;
-configurable string metricsLogsProvider = "";
 
 function init() returns error? {
     boolean isMissingMetricsReporter = ((enabled || metricsEnabled) && (provider == "" && metricsReporter == ""));
     boolean isMissingTracingProvider = ((enabled || tracingEnabled) && (provider == "" && tracingProvider == ""));
-    boolean isMissingMetricsLogsProvider = ((enabled || metricsLogsEnabled) && (provider == "" && metricsLogsProvider == ""));
-    if (isMissingMetricsReporter || isMissingTracingProvider || isMissingMetricsLogsProvider) {
+    if (isMissingMetricsReporter || isMissingTracingProvider) {
         string[] enabledObservers = [];
         string[] missingProviders = [];
         if (isMissingMetricsReporter) {
@@ -40,10 +38,6 @@ function init() returns error? {
         if (isMissingTracingProvider) {
             enabledObservers.push("tracing");
             missingProviders.push("tracing provider");
-        }
-        if (isMissingMetricsLogsProvider) {
-            enabledObservers.push("metrics logs");
-            missingProviders.push("metrics logs provider");
         }
         return error("Observability (" + " and ".join(...enabledObservers) + ") enabled without " +
             " and ".join(...missingProviders) + ". Please visit https://central.ballerina.io/ballerina/observe for " +
@@ -78,13 +72,6 @@ public isolated function isMetricsLogsEnabled() returns boolean = @java:Method {
 # + return - metrics provider.
 public isolated function getMetricsProvider() returns string = @java:Method {
     name: "getMetricsProvider",
-    'class: "io.ballerina.runtime.observability.ObserveUtils"
-} external;
-
-# Retrieve metrics logs provider.
-# + return - metrics logs provider.
-public isolated function getMetricsLogsProvider() returns string = @java:Method {
-    name: "getMetricsLogsProvider",
     'class: "io.ballerina.runtime.observability.ObserveUtils"
 } external;
 
