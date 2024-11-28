@@ -28,8 +28,7 @@ configurable boolean metricsLogsEnabled = false;
 function init() returns error? {
     boolean isMissingMetricsReporter = ((enabled || metricsEnabled) && (provider == "" && metricsReporter == ""));
     boolean isMissingTracingProvider = ((enabled || tracingEnabled) && (provider == "" && tracingProvider == ""));
-    boolean isMissingMetricsLogsProvider = enabled || metricsLogsEnabled;
-    if (isMissingMetricsReporter || isMissingTracingProvider || isMissingMetricsLogsProvider) {
+    if (isMissingMetricsReporter || isMissingTracingProvider) {
         string[] enabledObservers = [];
         string[] missingProviders = [];
         if (isMissingMetricsReporter) {
