@@ -61,6 +61,13 @@ public isolated function isMetricsEnabled() returns boolean = @java:Method {
     'class: "io.ballerina.runtime.observability.ObserveUtils"
 } external;
 
+# Check whether metrics logs is enabled.
+# + return -  metrics enabled/disabled.
+public isolated function isMetricsLogsEnabled() returns boolean = @java:Method {
+    name: "isMetricsLogsEnabled",
+    'class: "io.ballerina.runtime.observability.ObserveUtils"
+} external;
+
 # Retrieve metrics provider.
 # + return - metrics provider.
 public isolated function getMetricsProvider() returns string = @java:Method {
