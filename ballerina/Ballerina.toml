@@ -3,7 +3,11 @@ org = "ballerina"
 name = "observe"
 version = "1.4.0"
 distribution = "2201.10.0"
-export = ["observe", "observe.mockextension" ]
+
+[[package.modules]]
+name = "observe.mockextension"
+description = "This module provides mock extension to observe Ballerina applications."
+export = true
 
 [platform.java21]
 graalvmCompatible = true
