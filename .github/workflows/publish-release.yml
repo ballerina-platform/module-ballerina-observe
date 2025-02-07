@@ -54,6 +54,9 @@ jobs:
           publishUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           publishPAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
         run: |
+          rm -rf .cache
+          rm -rf trivy
+          git stash
           ./gradlew clean release -Prelease.useAutomaticVersion=true  --stacktrace --console=plain
           ./gradlew -Pversion=${VERSION} publish -x test -PpublishToCentral=true  --stacktrace --console=plain
       - name: GitHub Release and Release Sync PR
