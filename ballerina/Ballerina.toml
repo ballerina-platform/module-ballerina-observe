@@ -3,13 +3,17 @@ org = "ballerina"
 name = "observe"
 version = "1.4.0"
 distribution = "2201.11.0"
-export = ["observe", "observe.mockextension" ]
+
+[[package.modules]]
+name = "observe.mockextension"
+description = "This module provides mock extension to observe Ballerina applications."
+export = true
 
 [platform.java21]
 graalvmCompatible = true
 
 [[platform.java21.dependency]]
-path = "../native/build/libs/observe-native-1.4.0-SNAPSHOT.jar"
+path = "../native/build/libs/observe-native-1.4.0.jar"
 groupId = "ballerina"
 artifactId = "observe"
 

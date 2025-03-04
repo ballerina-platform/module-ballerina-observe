@@ -17,7 +17,9 @@
 
 import org.apache.tools.ant.taskdefs.condition.Os
 
-apply plugin: 'io.ballerina.plugin'
+plugins {
+    id 'io.ballerina.plugin'
+}
 
 description = 'Ballerina - Observability'
 
@@ -27,21 +29,6 @@ def packageOrg = "ballerina"
 def tomlVersion = stripBallerinaExtensionVersion("${project.version}")
 def ballerinaTomlFilePlaceHolder = new File("${project.rootDir}/build-config/resources/Ballerina.toml")
 def ballerinaTomlFile = new File("$project.projectDir/Ballerina.toml")
-
-buildscript {
-    repositories {
-        maven {
-            url = 'https://maven.pkg.github.com/ballerina-platform/plugin-gradle'
-            credentials {
-                username System.getenv("packageUser")
-                password System.getenv("packagePAT")
-            }
-        }
-    }
-    dependencies {
-        classpath "io.ballerina:plugin-gradle:${project.ballerinaGradlePluginVersion}"
-    }
-}
 
 def stripBallerinaExtensionVersion(String extVersion) {
     if (extVersion.matches(project.ext.timestampedVersionRegex)) {
@@ -120,6 +107,7 @@ publishing {
 updateTomlFiles.dependsOn copyStdlibs
 
 build.dependsOn(":observe-native:build")
+test.dependsOn(":observe-native:build")
 build.dependsOn(":observe-ballerina:generatePomFileForMavenPublication")
 build.finalizedBy(":observe-ballerina-tests:build")
 test.finalizedBy(":observe-ballerina-tests:build")
