@@ -55,7 +55,7 @@ public isolated function addTag(string tagKey, string tagValue) returns error? =
 # Get the value of a given key of a tag.
 #
 # + tagKey - Key of the tag
-# + return - An error if an error occurred while attaching tag to the span
+# + return - The value of the tag if present; otherwise ()
 public isolated function getTagValue(string tagKey) returns string? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GetTagValue",
     name: "getTagValue"
