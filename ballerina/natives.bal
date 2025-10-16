@@ -42,11 +42,11 @@ public isolated function startSpan(string spanName, map<string>? tags = (), int 
     name: "startSpan"
 } external;
 
-# Add a key value pair as a tag to the root.
+# Add a key-value pair as a tag to the root.
 #
 # + tagKey - Key of the tag
 # + tagValue - Value of the tag
-# + return - An error if an error occurred while attaching tag to the span
+# + return - An error if adding the tag failed; otherwise null
 public isolated function addTag(string tagKey, string tagValue) returns error? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.AddTag",
     name: "addTag"
@@ -55,7 +55,7 @@ public isolated function addTag(string tagKey, string tagValue) returns error? =
 # Get the value of a given key of a tag.
 #
 # + tagKey - Key of the tag
-# + return - The value of the tag if present; otherwise ()
+# + return - The value of the tag if present; otherwise null
 public isolated function getTagValue(string tagKey) returns string? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.GetTagValue",
     name: "getTagValue"
