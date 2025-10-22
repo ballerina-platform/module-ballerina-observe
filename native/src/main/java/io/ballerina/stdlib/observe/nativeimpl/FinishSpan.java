@@ -22,7 +22,7 @@ package io.ballerina.stdlib.observe.nativeimpl;
 import io.ballerina.runtime.api.Environment;
 import io.ballerina.runtime.api.creators.ErrorCreator;
 import io.ballerina.runtime.api.utils.StringUtils;
-import io.ballerina.runtime.api.values.BString;
+import io.ballerina.runtime.api.values.BError;
 
 /**
  * This function which implements the finishSpan method for observe.
@@ -42,9 +42,9 @@ public class FinishSpan {
                 "already finished")));
     }
 
-    public static Object finishSpanWithError(Environment env, long spanId, BString errorMessage) {
+    public static Object finishSpanWithError(Environment env, long spanId, BError error) {
         boolean isFinished = OpenTracerBallerinaWrapper.getInstance().finishSpanWithError(env, spanId,
-                errorMessage.getValue());
+                error);
 
         if (isFinished) {
             return null;

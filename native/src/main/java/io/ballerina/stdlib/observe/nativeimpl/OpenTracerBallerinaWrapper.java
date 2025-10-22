@@ -22,6 +22,7 @@ package io.ballerina.stdlib.observe.nativeimpl;
 import io.ballerina.runtime.api.Environment;
 import io.ballerina.runtime.api.creators.ErrorCreator;
 import io.ballerina.runtime.api.utils.StringUtils;
+import io.ballerina.runtime.api.values.BError;
 import io.ballerina.runtime.observability.ObserveUtils;
 import io.ballerina.runtime.observability.ObserverContext;
 import io.ballerina.runtime.observability.tracer.BSpan;
@@ -175,7 +176,7 @@ public class OpenTracerBallerinaWrapper {
      * @param spanId id of the Span
      * @return boolean to indicate if span was finished
      */
-    public boolean finishSpanWithError(Environment env, long spanId, String errorValue) {
+    public boolean finishSpanWithError(Environment env, long spanId, BError error) {
 
         if (!enabled) {
             return false;
@@ -183,7 +184,7 @@ public class OpenTracerBallerinaWrapper {
         ObserverContext observerContext = observerContextMap.get(spanId);
         if (observerContext != null) {
             observerContext.addTag(TAG_KEY_ERROR, TAG_TRUE_VALUE);
-            observerContext.addProperty(PROPERTY_ERROR_VALUE, errorValue);
+            observerContext.addProperty(PROPERTY_ERROR_VALUE, error);
             if (observerContext.isSystemSpan()) {
                 ObserveUtils.setObserverContextToCurrentFrame(env, observerContext.getParent());
             }
