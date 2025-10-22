@@ -75,7 +75,7 @@ public isolated function finishSpan(int spanId) returns error? = @java:Method {
 # Finish the current span.
 #
 # + spanId - Id of span to finish
-# + errorMessage - Error message to be recorded in the span
+# + error - Error to be recorded in the span
 # + return - An error if an error occurred while finishing the span
 public isolated function finishSpanWithError(int spanId, error 'error) returns error? = @java:Method {
     'class: "io.ballerina.stdlib.observe.nativeimpl.FinishSpan",
