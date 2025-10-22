@@ -183,7 +183,6 @@ public class OpenTracerBallerinaWrapper {
         }
         ObserverContext observerContext = observerContextMap.get(spanId);
         if (observerContext != null) {
-            observerContext.addTag(TAG_KEY_ERROR, TAG_TRUE_VALUE);
             observerContext.addProperty(PROPERTY_ERROR_VALUE, error);
             if (observerContext.isSystemSpan()) {
                 ObserveUtils.setObserverContextToCurrentFrame(env, observerContext.getParent());
