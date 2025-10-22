@@ -42,8 +42,6 @@ import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_
 import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_ENTRYPOINT_FUNCTION_NAME;
 import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_ENTRYPOINT_RESOURCE_ACCESSOR;
 import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_ENTRYPOINT_SERVICE_NAME;
-import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_ERROR;
-import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_TRUE_VALUE;
 
 /**
  * This class wraps opentracing apis and exposes extern functions to use within ballerina.
