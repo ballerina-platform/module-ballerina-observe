@@ -36,10 +36,13 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static io.ballerina.runtime.observability.ObservabilityConstants.DEFAULT_SERVICE_NAME;
+import static io.ballerina.runtime.observability.ObservabilityConstants.PROPERTY_ERROR_VALUE;
 import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_ENTRYPOINT_FUNCTION_MODULE;
 import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_ENTRYPOINT_FUNCTION_NAME;
 import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_ENTRYPOINT_RESOURCE_ACCESSOR;
 import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_ENTRYPOINT_SERVICE_NAME;
+import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_ERROR;
+import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_TRUE_VALUE;
 
 /**
  * This class wraps opentracing apis and exposes extern functions to use within ballerina.
@@ -153,6 +156,34 @@ public class OpenTracerBallerinaWrapper {
         }
         ObserverContext observerContext = observerContextMap.get(spanId);
         if (observerContext != null) {
+            if (observerContext.isSystemSpan()) {
+                ObserveUtils.setObserverContextToCurrentFrame(env, observerContext.getParent());
+            }
+            TracingUtils.stopObservation(observerContext);
+            observerContext.setFinished();
+            observerContextMap.remove(spanId);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Method to mark a span as finished.
+     *
+     * @param env    current environment
+     * @param spanId id of the Span
+     * @return boolean to indicate if span was finished
+     */
+    public boolean finishSpanWithError(Environment env, long spanId, String errorValue) {
+
+        if (!enabled) {
+            return false;
+        }
+        ObserverContext observerContext = observerContextMap.get(spanId);
+        if (observerContext != null) {
+            observerContext.addTag(TAG_KEY_ERROR, TAG_TRUE_VALUE);
+            observerContext.addProperty(PROPERTY_ERROR_VALUE, errorValue);
             if (observerContext.isSystemSpan()) {
                 ObserveUtils.setObserverContextToCurrentFrame(env, observerContext.getParent());
             }
