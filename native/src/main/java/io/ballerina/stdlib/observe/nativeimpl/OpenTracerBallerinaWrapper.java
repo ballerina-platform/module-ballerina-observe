@@ -22,6 +22,7 @@ package io.ballerina.stdlib.observe.nativeimpl;
 import io.ballerina.runtime.api.Environment;
 import io.ballerina.runtime.api.creators.ErrorCreator;
 import io.ballerina.runtime.api.utils.StringUtils;
+import io.ballerina.runtime.api.values.BError;
 import io.ballerina.runtime.observability.ObserveUtils;
 import io.ballerina.runtime.observability.ObserverContext;
 import io.ballerina.runtime.observability.tracer.BSpan;
@@ -36,6 +37,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static io.ballerina.runtime.observability.ObservabilityConstants.DEFAULT_SERVICE_NAME;
+import static io.ballerina.runtime.observability.ObservabilityConstants.PROPERTY_ERROR_VALUE;
 import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_ENTRYPOINT_FUNCTION_MODULE;
 import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_ENTRYPOINT_FUNCTION_NAME;
 import static io.ballerina.runtime.observability.ObservabilityConstants.TAG_KEY_ENTRYPOINT_RESOURCE_ACCESSOR;
@@ -153,6 +155,33 @@ public class OpenTracerBallerinaWrapper {
         }
         ObserverContext observerContext = observerContextMap.get(spanId);
         if (observerContext != null) {
+            if (observerContext.isSystemSpan()) {
+                ObserveUtils.setObserverContextToCurrentFrame(env, observerContext.getParent());
+            }
+            TracingUtils.stopObservation(observerContext);
+            observerContext.setFinished();
+            observerContextMap.remove(spanId);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Method to mark a span as finished.
+     *
+     * @param env    current environment
+     * @param spanId id of the Span
+     * @return boolean to indicate if span was finished
+     */
+    public boolean finishSpanWithError(Environment env, long spanId, BError error) {
+
+        if (!enabled) {
+            return false;
+        }
+        ObserverContext observerContext = observerContextMap.get(spanId);
+        if (observerContext != null) {
+            observerContext.addProperty(PROPERTY_ERROR_VALUE, error);
             if (observerContext.isSystemSpan()) {
                 ObserveUtils.setObserverContextToCurrentFrame(env, observerContext.getParent());
             }

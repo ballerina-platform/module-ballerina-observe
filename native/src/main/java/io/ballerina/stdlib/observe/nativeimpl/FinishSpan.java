@@ -22,6 +22,7 @@ package io.ballerina.stdlib.observe.nativeimpl;
 import io.ballerina.runtime.api.Environment;
 import io.ballerina.runtime.api.creators.ErrorCreator;
 import io.ballerina.runtime.api.utils.StringUtils;
+import io.ballerina.runtime.api.values.BError;
 
 /**
  * This function which implements the finishSpan method for observe.
@@ -32,6 +33,18 @@ public class FinishSpan {
 
     public static Object finishSpan(Environment env, long spanId) {
         boolean isFinished = OpenTracerBallerinaWrapper.getInstance().finishSpan(env, spanId);
+
+        if (isFinished) {
+            return null;
+        }
+
+        return ErrorCreator.createError(StringUtils.fromString(("Can not finish span with id " + spanId + ". Span " +
+                "already finished")));
+    }
+
+    public static Object finishSpanWithError(Environment env, long spanId, BError error) {
+        boolean isFinished = OpenTracerBallerinaWrapper.getInstance().finishSpanWithError(env, spanId,
+                error);
 
         if (isFinished) {
             return null;
