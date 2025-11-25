@@ -13,7 +13,7 @@ export = true
 graalvmCompatible = true
 
 [[platform.java21.dependency]]
-path = "../native/build/libs/observe-native-1.7.0-SNAPSHOT.jar"
+path = "../native/build/libs/observe-native-1.7.0.jar"
 groupId = "ballerina"
 artifactId = "observe"
 
