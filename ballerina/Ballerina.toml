@@ -2,7 +2,7 @@
 org = "ballerina"
 name = "observe"
 version = "1.7.0"
-distribution = "2201.13.0"
+distribution = "2201.13.2"
 
 [[package.modules]]
 name = "observe.mockextension"
@@ -13,7 +13,7 @@ export = true
 graalvmCompatible = true
 
 [[platform.java21.dependency]]
-path = "../native/build/libs/observe-native-1.7.0.jar"
+path = "../native/build/libs/observe-native-1.7.0-SNAPSHOT.jar"
 groupId = "ballerina"
 artifactId = "observe"
 
