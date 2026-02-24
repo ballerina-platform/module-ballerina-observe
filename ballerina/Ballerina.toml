@@ -2,7 +2,7 @@
 org = "ballerina"
 name = "observe"
 version = "1.7.1-alpha"
-distribution = "2201.13.0"
+distribution = "2201.13.2"
 
 [[package.modules]]
 name = "observe.mockextension"
