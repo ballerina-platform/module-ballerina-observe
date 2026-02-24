@@ -36,7 +36,7 @@ public class GetTagValue {
                 } catch (NoSuchMethodError e) {
                     return null;
                 }
-                return  null;
+                return null;
             }
             Tag tag = observerContext.getTag(tagKey.getValue());
             if (tag != null) {
