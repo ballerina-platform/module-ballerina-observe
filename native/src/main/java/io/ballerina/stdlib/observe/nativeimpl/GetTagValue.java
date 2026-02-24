@@ -28,11 +28,15 @@ public class GetTagValue {
         if (ObserveUtils.isObservabilityEnabled()) {
             ObserverContext observerContext = ObserveUtils.getObserverContextOfCurrentFrame(env);
             if (observerContext == null) {
-                String value = ObserveUtils.getCustomTag(tagKey.getValue());
-                if (value != null) {
-                    return StringUtils.fromString(value);
+                try {
+                    String value = ObserveUtils.getCustomTag(tagKey.getValue());
+                    if (value != null) {
+                        return StringUtils.fromString(value);
+                    }
+                } catch (NoSuchMethodError e) {
+                    return null;
                 }
-                return null;
+                return  null;
             }
             Tag tag = observerContext.getTag(tagKey.getValue());
             if (tag != null) {
