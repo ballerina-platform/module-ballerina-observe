@@ -31,8 +31,3 @@ version = "@opentelemetry.version@"
 groupId = "io.opentelemetry"
 artifactId = "opentelemetry-sdk-common"
 version = "@opentelemetry.version@"
-
-[[platform.java21.dependency]]
-groupId = "io.opentelemetry"
-artifactId = "opentelemetry-semconv"
-version = "@opentelemetry.version@-alpha"
