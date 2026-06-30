@@ -33,6 +33,6 @@ artifactId = "opentelemetry-sdk-common"
 version = "1.63.0"
 
 [[platform.java21.dependency]]
-groupId = "io.opentelemetry"
+groupId = "io.opentelemetry.semconv"
 artifactId = "opentelemetry-semconv"
-version = "1.63.0-alpha"
+version = "1.27.0"
