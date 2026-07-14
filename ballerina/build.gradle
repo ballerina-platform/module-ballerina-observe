@@ -64,6 +64,7 @@ task updateTomlFiles {
         newBallerinaToml = newBallerinaToml.replace("@toml.version@", tomlVersion)
         newBallerinaToml = newBallerinaToml.replace("@testng.version@", stdlibDependentTestngVersion)
         newBallerinaToml = newBallerinaToml.replace("@opentelemetry.version@", openTelemetryVersion)
+        newBallerinaToml = newBallerinaToml.replace("@opentelemetry.semconv.version@", openTelemetrySemconvVersion)
         ballerinaTomlFile.text = newBallerinaToml
     }
 }
