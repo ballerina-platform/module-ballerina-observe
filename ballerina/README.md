@@ -1,10 +1,11 @@
 ## Module Overview
 
-This module provides an API for observing Ballerina services.
-Ballerina supports Observability out of the box. This module provides an API to make observability more flexible for the Ballerina users.
+This module provides internal configurations and an API for observing Ballerina services, enabled via the `--observability-included` build flag or `--b7a.observability.enabled=true` runtime flag.
 
-To observe the Ballerina code, the '--b7a.observability.enabled=true' property should be given when starting the service
-(i.e., `ballerina run hello_world.bal --b7a.observability.enabled=true').
+## Key Features
+
+- Distributed tracing for Ballerina services
+- Custom metrics: counters, gauges, and global metrics
 
 ## Tracing
 Tracing provides information regarding the roundtrip of a service invocation based on the concept of spans, which are
