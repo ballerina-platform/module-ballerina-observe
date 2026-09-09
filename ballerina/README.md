@@ -2,7 +2,7 @@
 
 This module provides internal configurations and an API for observing Ballerina services, enabled via the `--observability-included` build flag or `--b7a.observability.enabled=true` runtime flag.
 
-## Key Features
+### Key Features
 
 - Distributed tracing for Ballerina services
 - Custom metrics: counters, gauges, and global metrics
