@@ -2,8 +2,7 @@
 org = "ballerina"
 name = "observe"
 version = "1.8.0"
-version = "1.7.3"
-distribution = "2201.13.2"
+distribution = "2201.14.0"
 keywords = ["Type/Library", "Name/Observe"]
 
 [[package.modules]]
